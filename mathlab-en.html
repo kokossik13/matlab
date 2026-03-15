@@ -3,209 +3,190 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#07080f">
+<meta name="theme-color" content="#060812">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>MathLab — SAT, GCSE & AP Math Trainer</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;800;900&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<title>MathLab — SAT & GCSE Math Trainer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#07080f;--s1:#10111c;--s2:#181926;--b:#252640;
-  --a1:#6c63ff;--a2:#ffd166;--a3:#06d6a0;--a4:#ff6b6b;--a5:#38bdf8;
-  --txt:#e2e2f0;--dim:#5a5a7a;
-  --gold:#ffd700;--silver:#c0c0c0;--bronze:#cd7f32;
+  --bg:#060812;--s1:#0d0f1e;--s2:#13152a;--b:#1e2140;
+  --a1:#7c6dff;--a2:#ffcb47;--a3:#00e5a0;--a4:#ff5f6d;
+  --a5:#38bdf8;--txt:#dde1ff;--dim:#4a4e7a;
+  --gold:#ffd700;--silver:#b0b8d0;--bronze:#c87941;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 html{background:var(--bg);}
-body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-serif;min-height:100vh;
-  min-height:-webkit-fill-available;}
+body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-serif;min-height:100vh;}
 
-/* BG */
-.bg-glow{position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:radial-gradient(ellipse 600px 400px at 80% 10%,rgba(108,99,255,.12) 0%,transparent 70%),
-             radial-gradient(ellipse 400px 400px at 10% 80%,rgba(6,214,160,.08) 0%,transparent 70%);}
-.bg-grid{position:fixed;inset:0;pointer-events:none;z-index:0;
-  background-image:linear-gradient(var(--b) 1px,transparent 1px),linear-gradient(90deg,var(--b) 1px,transparent 1px);
-  background-size:48px 48px;opacity:.2;}
-.wrap{max-width:720px;margin:0 auto;padding:0 18px;position:relative;z-index:1;}
+/* ── BACKGROUND ── */
+.bg-aurora{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.aurora-1{position:absolute;width:800px;height:600px;top:-200px;right:-100px;
+  background:radial-gradient(ellipse,rgba(124,109,255,.18) 0%,transparent 65%);
+  animation:drift1 12s ease-in-out infinite;}
+.aurora-2{position:absolute;width:600px;height:500px;bottom:-100px;left:-150px;
+  background:radial-gradient(ellipse,rgba(0,229,160,.1) 0%,transparent 65%);
+  animation:drift2 15s ease-in-out infinite;}
+.aurora-3{position:absolute;width:400px;height:400px;top:40%;left:40%;
+  background:radial-gradient(ellipse,rgba(56,189,248,.08) 0%,transparent 65%);
+  animation:drift3 10s ease-in-out infinite;}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-60px,40px) scale(1.1);}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(50px,-30px) scale(1.08);}}
+@keyframes drift3{0%,100%{transform:translate(0,0);}50%{transform:translate(-30px,50px);}}
 
-/* NAV */
+.wrap{max-width:680px;margin:0 auto;padding:0 18px;position:relative;z-index:1;}
+
+/* ── NAV ── */
 .nav{display:flex;gap:4px;padding:20px 0 0;}
-.nav-btn{padding:10px 18px;border-radius:10px 10px 0 0;border:1.5px solid var(--b);border-bottom:none;
-  background:transparent;color:var(--dim);font-family:'Syne',sans-serif;font-size:10px;font-weight:700;
-  cursor:pointer;transition:all .2s;letter-spacing:.5px;}
+.nav-btn{padding:10px 22px;border-radius:10px 10px 0 0;border:1.5px solid var(--b);border-bottom:none;
+  background:transparent;color:var(--dim);font-family:'Syne',sans-serif;font-size:11px;font-weight:800;
+  cursor:pointer;transition:all .2s;letter-spacing:1px;text-transform:uppercase;}
 .nav-btn.on{background:var(--s1);color:var(--txt);}
 .nav-line{height:1px;background:var(--b);margin-bottom:24px;}
 .page{display:none;}
 .page.on{display:block;}
 
-/* TOPBAR */
-.topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-top:12px;}
-.logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:900;}
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:20px 0 16px;}
+.logo{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;letter-spacing:-0.5px;}
 .logo em{color:var(--a1);font-style:normal;}
-.logo sup{font-size:9px;color:var(--a2);vertical-align:super;background:rgba(255,209,102,.12);padding:2px 6px;border-radius:4px;}
+.logo sup{font-size:9px;color:var(--a2);vertical-align:super;background:rgba(255,203,71,.12);
+  padding:2px 6px;border-radius:4px;font-family:'Space Grotesk',sans-serif;font-weight:600;letter-spacing:.5px;}
 .user-bar{display:flex;align-items:center;gap:10px;}
-.user-nick{font-family:'Syne',sans-serif;font-size:12px;color:var(--a2);cursor:pointer;font-weight:700;}
-.user-pts{font-family:'Syne',sans-serif;font-size:12px;color:var(--a3);font-weight:700;}
-.user-rank{font-size:10px;color:var(--dim);}
+.user-nick{font-family:'Syne',sans-serif;font-size:13px;color:var(--a2);cursor:pointer;font-weight:700;}
+.user-pts{font-family:'Syne',sans-serif;font-size:13px;color:var(--a3);font-weight:700;}
+.user-rank{font-size:11px;color:var(--dim);}
 
-/* DAILY GOAL */
-.daily-goal{background:var(--s1);border:1.5px solid var(--b);border-radius:14px;padding:14px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;}
-.dg-icon{font-size:28px;flex-shrink:0;}
-.dg-info{flex:1;}
-.dg-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--a2);margin-bottom:4px;}
-.dg-text{font-size:12px;color:var(--dim);line-height:1.4;}
-.dg-text b{color:var(--txt);}
-.dg-bar{height:6px;background:var(--b);border-radius:3px;margin-top:6px;overflow:hidden;}
-.dg-fill{height:100%;background:linear-gradient(90deg,var(--a3),var(--a2));border-radius:3px;transition:width .5s;}
-.dg-streak{display:flex;gap:4px;margin-top:8px;}
-.dg-day{width:22px;height:22px;border-radius:6px;background:var(--s2);border:1px solid var(--b);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--dim);}
-.dg-day.done{background:rgba(6,214,160,.15);border-color:var(--a3);color:var(--a3);}
-.dg-day.today{border-color:var(--a2);color:var(--a2);}
-
-/* FREE BAR */
-.free-bar{display:flex;align-items:center;gap:10px;background:var(--s1);border:1.5px solid var(--b);border-radius:12px;padding:10px 16px;margin-bottom:16px;flex-wrap:wrap;}
+/* ── FREE BAR ── */
+.free-bar{display:flex;align-items:center;gap:10px;background:var(--s1);border:1.5px solid var(--b);
+  border-radius:12px;padding:10px 16px;margin-bottom:16px;flex-wrap:wrap;}
 .free-label{font-size:12px;color:var(--dim);flex:1;min-width:120px;}
 .free-label b{color:var(--txt);}
 .free-prog{flex:2;min-width:80px;height:5px;background:var(--b);border-radius:3px;overflow:hidden;}
 .free-fill{height:100%;background:linear-gradient(90deg,var(--a3),var(--a2));border-radius:3px;transition:width .4s;}
 .upgrade-btn{padding:6px 14px;background:var(--a1);border:none;border-radius:8px;color:#fff;
-  font-family:'Syne',sans-serif;font-size:10px;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;}
-.upgrade-btn:hover{background:#8880ff;transform:translateY(-1px);}
+  font-family:'Syne',sans-serif;font-size:10px;font-weight:800;cursor:pointer;letter-spacing:.5px;
+  transition:all .2s;white-space:nowrap;text-transform:uppercase;}
+.upgrade-btn:hover{background:#9d91ff;transform:translateY(-1px);}
 
-/* MODALS */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:100;display:none;align-items:center;justify-content:center;padding:16px;}
+/* ── MODALS ── */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:100;display:none;align-items:center;justify-content:center;}
 .modal-overlay.show{display:flex;}
-.modal{background:var(--s1);border:1.5px solid var(--b);border-radius:24px;padding:32px;width:min(480px,100%);position:relative;animation:modalIn .25s ease;max-height:90vh;overflow-y:auto;}
+.modal{background:var(--s1);border:1.5px solid var(--b);border-radius:24px;padding:36px;width:min(480px,93vw);position:relative;animation:modalIn .25s ease;}
 @keyframes modalIn{from{opacity:0;transform:scale(.95)translateY(10px);}to{opacity:1;transform:none;}}
 .modal-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--dim);font-size:20px;cursor:pointer;}
 .modal-close:hover{color:var(--txt);}
-.modal h2{font-family:'Syne',sans-serif;font-size:18px;margin-bottom:8px;}
-.modal p{font-size:14px;color:var(--dim);margin-bottom:20px;line-height:1.6;}
+.modal h2{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:8px;}
+.modal p{font-size:14px;color:var(--dim);margin-bottom:24px;line-height:1.6;}
 .modal-input{width:100%;background:var(--s2);border:2px solid var(--b);border-radius:12px;padding:14px 18px;
-  font-family:'Syne',sans-serif;font-size:18px;color:var(--txt);outline:none;margin-bottom:14px;transition:border-color .2s;}
+  font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--txt);outline:none;margin-bottom:14px;transition:border-color .2s;}
 .modal-input:focus{border-color:var(--a1);}
 .modal-btn{width:100%;padding:14px;background:var(--a1);border:none;border-radius:12px;color:#fff;
-  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .2s;letter-spacing:.5px;}
-.modal-btn:hover{background:#8880ff;}
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:800;cursor:pointer;transition:all .2s;letter-spacing:.5px;text-transform:uppercase;}
+.modal-btn:hover{background:#9d91ff;}
 .modal-btn.gold{background:linear-gradient(135deg,#f7c26a,#e8960a);color:#1a1000;}
 .modal-btn.gold:hover{filter:brightness(1.1);}
 
-/* PAYWALL */
-.pw-icon{font-size:48px;text-align:center;margin-bottom:12px;}
-.pw-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:900;text-align:center;margin-bottom:6px;}
-.pw-sub{font-size:13px;color:var(--dim);text-align:center;margin-bottom:18px;line-height:1.6;}
-.pw-plans{display:flex;gap:8px;margin-bottom:16px;}
-.pw-plan{flex:1;background:var(--s2);border:2px solid var(--b);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;position:relative;}
-.pw-plan:hover{border-color:var(--a1);}
-.pw-plan.on{border-color:var(--a2);background:rgba(255,209,102,.06);}
-.pw-plan.best::before{content:'BEST';position:absolute;top:-9px;left:50%;transform:translateX(-50%);
-  background:var(--a4);color:#fff;font-family:'Syne',sans-serif;font-size:8px;font-weight:700;
-  padding:2px 8px;border-radius:4px;letter-spacing:.5px;}
-.pw-plan-dur{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px;}
-.pw-plan-price{font-family:'Syne',sans-serif;font-size:22px;font-weight:900;color:var(--a2);line-height:1;}
-.pw-plan-per{font-size:10px;color:var(--dim);margin-top:3px;}
-.pw-plan-save{font-size:10px;color:var(--a3);font-weight:600;margin-top:4px;}
-.pw-plan-old{font-size:10px;color:var(--dim);text-decoration:line-through;margin-top:2px;}
-.pw-feats{display:flex;flex-direction:column;gap:7px;margin-bottom:16px;}
-.pw-f{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.4;}
-.pw-fc{color:var(--a3);font-size:15px;flex-shrink:0;}
+/* ── PAYWALL ── */
+.pw-icon{font-size:52px;text-align:center;margin-bottom:14px;}
+.pw-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;text-align:center;margin-bottom:6px;}
+.pw-sub{font-size:14px;color:var(--dim);text-align:center;margin-bottom:20px;line-height:1.6;}
+.pw-price{text-align:center;margin-bottom:20px;padding:16px;background:rgba(255,203,71,.07);border-radius:14px;border:1px solid rgba(255,203,71,.2);}
+.pw-price .amt{font-family:'Syne',sans-serif;font-size:34px;font-weight:800;color:var(--a2);}
+.pw-price .per{font-size:13px;color:var(--dim);margin-left:5px;}
+.pw-price .old{font-size:13px;color:var(--dim);text-decoration:line-through;margin-right:8px;}
+.pw-feats{display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+.pw-feat{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.4;}
+.pw-feat-check{color:var(--a3);font-size:16px;flex-shrink:0;}
 .pw-demo{background:none;border:none;color:var(--dim);font-size:12px;cursor:pointer;width:100%;text-align:center;margin-top:10px;text-decoration:underline;padding:4px;}
 .pw-demo:hover{color:var(--txt);}
 
-/* STATS */
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px;}
-.stat-card{background:var(--s1);border:1.5px solid var(--b);border-radius:14px;padding:12px 10px;text-align:center;}
-.stat-val{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;line-height:1;}
+/* ── STATS ── */
+.stats-row{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.stat-card{flex:1;min-width:75px;background:var(--s1);border:1.5px solid var(--b);border-radius:14px;padding:12px 10px;text-align:center;}
+.stat-val{font-family:'Syne',sans-serif;font-size:18px;font-weight:800;line-height:1;}
 .stat-val.g{color:var(--a3);}.stat-val.r{color:var(--a4);}.stat-val.y{color:var(--a2);}.stat-val.p{color:var(--a1);}
 .stat-lbl{font-size:9px;color:var(--dim);letter-spacing:.8px;text-transform:uppercase;margin-top:4px;}
 
-/* EXAM / LEVEL / TOPIC */
+/* ── EXAM / LEVEL / TOPIC ── */
 .exam-row{display:flex;gap:0;margin-bottom:14px;background:var(--s1);border:1.5px solid var(--b);border-radius:12px;padding:4px;width:fit-content;}
-.exam-btn{padding:8px 18px;border-radius:9px;border:none;background:transparent;cursor:pointer;
-  font-family:'Syne',sans-serif;font-size:10px;font-weight:700;color:var(--dim);transition:all .2s;}
-.exam-btn.oge.on{background:var(--a3);color:#07080f;}
-.exam-btn.ege.on{background:var(--a4);color:#fff;}
-.exam-btn.vpr.on{background:var(--a2);color:#1a1000;}
+.exam-btn{padding:8px 20px;border-radius:9px;border:none;background:transparent;cursor:pointer;
+  font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:var(--dim);transition:all .2s;letter-spacing:.5px;text-transform:uppercase;}
+.exam-btn.sat.on{background:var(--a1);color:#fff;}
+.exam-btn.gcse.on{background:var(--a5);color:#060812;}
+.exam-btn.ap.on{background:var(--a3);color:#060812;}
 
 .level-row{display:flex;gap:7px;margin-bottom:13px;}
 .lvl-btn{flex:1;padding:8px 0;border:1.5px solid var(--b);border-radius:10px;background:transparent;
-  color:var(--dim);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;position:relative;}
+  color:var(--dim);font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;}
 .lvl-btn:hover{border-color:var(--a1);color:var(--txt);}
 .lvl-btn.on{background:var(--a1);border-color:var(--a1);color:#fff;}
-.lvl-btn .lock-icon{font-size:10px;margin-left:2px;}
-
 .topic-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
 .chip{padding:5px 12px;border-radius:100px;border:1.5px solid var(--b);background:transparent;color:var(--dim);
-  font-family:'Space Grotesk',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
+  font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:500;cursor:pointer;transition:all .2s;}
 .chip:hover{border-color:var(--a2);color:var(--txt);}
-.chip.on{background:rgba(255,209,102,.12);border-color:var(--a2);color:var(--a2);}
+.chip.on{background:rgba(255,203,71,.12);border-color:var(--a2);color:var(--a2);}
 
-/* ADAPTIVE BADGE */
-.adapt-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--a5);background:rgba(56,189,248,.1);
-  border:1px solid rgba(56,189,248,.25);border-radius:6px;padding:3px 8px;margin-bottom:12px;font-weight:600;}
-
-/* CARD */
-.card{background:var(--s1);border:1.5px solid var(--b);border-radius:20px;padding:24px;margin-bottom:12px;position:relative;overflow:hidden;}
+/* ── CARD ── */
+.card{background:var(--s1);border:1.5px solid var(--b);border-radius:20px;padding:26px;margin-bottom:12px;position:relative;overflow:hidden;}
 .card-bar{position:absolute;top:0;left:0;right:0;height:3px;}
-.card-bar.oge{background:linear-gradient(90deg,var(--a3),#0af5c0);}
-.card-bar.ege{background:linear-gradient(90deg,var(--a4),#ff9a9a);}
-.card-bar.vpr{background:linear-gradient(90deg,var(--a2),#ffb347);}
+.card-bar.sat{background:linear-gradient(90deg,var(--a1),#b8aaff);}
+.card-bar.gcse{background:linear-gradient(90deg,var(--a5),#93e9ff);}
+.card-bar.ap{background:linear-gradient(90deg,var(--a3),#a8ffdf);}
 
-.task-top{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap;}
-.ttag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--a1);background:rgba(108,99,255,.12);padding:3px 9px;border-radius:5px;}
+.task-top{display:flex;align-items:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.ttag{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--a1);background:rgba(124,109,255,.12);padding:3px 9px;border-radius:5px;font-family:'Syne',sans-serif;}
 .tdiff{display:flex;gap:3px;}
 .tdot{width:7px;height:7px;border-radius:50%;background:var(--b);}
 .tdot.on{background:var(--a2);}
-.pts-badge{background:rgba(255,209,102,.15);color:var(--a2);font-family:'Syne',sans-serif;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px;}
+.pts-badge{background:rgba(255,203,71,.15);color:var(--a2);font-family:'Syne',sans-serif;font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;}
 .tnum{margin-left:auto;font-size:11px;color:var(--dim);}
 
-.task-q{font-size:16px;line-height:1.75;margin-bottom:20px;}
-.task-q .mth{font-family:'Syne',sans-serif;color:var(--a2);font-size:14px;}
+.task-q{font-size:17px;line-height:1.75;margin-bottom:22px;}
+.task-q .mth{font-family:'Syne',sans-serif;color:var(--a2);font-size:15px;font-weight:700;}
 .task-q b{color:var(--txt);font-weight:600;}
 
 .ans-row{display:flex;gap:10px;}
 .ans-in{flex:1;background:var(--s2);border:2px solid var(--b);border-radius:12px;padding:12px 16px;
-  font-family:'Syne',sans-serif;font-size:20px;color:var(--txt);outline:none;transition:border-color .2s;}
-.ans-in::placeholder{color:var(--b);font-size:13px;font-family:'Space Grotesk',sans-serif;}
+  font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--txt);outline:none;transition:border-color .2s;}
+.ans-in::placeholder{color:var(--b);font-size:13px;font-family:'Space Grotesk',sans-serif;font-weight:400;}
 .ans-in:focus{border-color:var(--a1);}
-.ans-in.ok{border-color:var(--a3);background:rgba(6,214,160,.05);}
-.ans-in.bad{border-color:var(--a4);background:rgba(255,107,107,.05);}
+.ans-in.ok{border-color:var(--a3);background:rgba(0,229,160,.05);}
+.ans-in.bad{border-color:var(--a4);background:rgba(255,95,109,.05);}
 .go-btn{padding:12px 20px;background:var(--a1);border:none;border-radius:12px;color:#fff;
-  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;}
-.go-btn:hover{background:#8880ff;transform:translateY(-1px);}
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:800;cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.5px;}
+.go-btn:hover{background:#9d91ff;transform:translateY(-1px);}
 .go-btn:disabled{opacity:.4;cursor:default;transform:none;}
 
-/* HINT */
 .hint-toggle{background:none;border:none;color:var(--dim);font-family:'Space Grotesk',sans-serif;font-size:13px;
   cursor:pointer;padding:10px 0;display:flex;gap:6px;align-items:center;transition:color .2s;}
 .hint-toggle:hover{color:var(--a2);}
-.hint-box{margin-top:6px;padding:12px 16px;background:rgba(255,209,102,.06);border-left:3px solid var(--a2);
+.hint-box{margin-top:6px;padding:12px 16px;background:rgba(255,203,71,.06);border-left:3px solid var(--a2);
   border-radius:0 8px 8px 0;font-size:13px;color:#bbb8d8;display:none;}
 .hint-box.show{display:block;}
 
-/* FEEDBACK */
+/* ── FEEDBACK ── */
 .fb{margin-top:16px;border-radius:16px;display:none;overflow:hidden;}
-.fb.ok{border:1.5px solid rgba(6,214,160,.25);display:block;}
-.fb.bad{border:1.5px solid rgba(255,107,107,.25);display:block;}
+.fb.ok{border:1.5px solid rgba(0,229,160,.25);display:block;}
+.fb.bad{border:1.5px solid rgba(255,95,109,.25);display:block;}
 .fb-head{padding:14px 18px;display:flex;align-items:center;gap:10px;}
-.fb.ok .fb-head{background:rgba(6,214,160,.08);}
-.fb.bad .fb-head{background:rgba(255,107,107,.08);}
+.fb.ok .fb-head{background:rgba(0,229,160,.08);}
+.fb.bad .fb-head{background:rgba(255,95,109,.08);}
 .fb-icon{font-size:20px;}
-.fb-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;}
+.fb-title{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;}
 .fb.ok .fb-title{color:var(--a3);}
 .fb.bad .fb-title{color:var(--a4);}
 .fb-body{padding:16px 18px;display:flex;flex-direction:column;gap:14px;}
-.fb-concept{background:rgba(108,99,255,.08);border:1px solid rgba(108,99,255,.2);border-radius:10px;padding:12px 14px;}
-.fb-concept-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--a1);margin-bottom:6px;}
+.fb-concept{background:rgba(124,109,255,.08);border:1px solid rgba(124,109,255,.2);border-radius:10px;padding:12px 14px;}
+.fb-concept-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--a1);margin-bottom:6px;font-family:'Syne',sans-serif;}
 .fb-concept-txt{font-size:13px;color:#c8c8e8;line-height:1.6;}
 .fb-concept-txt b{color:var(--a2);}
-.steps-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin-bottom:8px;}
+.steps-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--dim);margin-bottom:8px;font-family:'Syne',sans-serif;}
 .steps{display:flex;flex-direction:column;}
 .srow{display:flex;gap:0;align-items:stretch;}
 .sline{display:flex;flex-direction:column;align-items:center;margin-right:12px;}
 .sn{width:26px;height:26px;background:var(--s2);border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-size:11px;font-weight:700;flex-shrink:0;color:var(--a1);border:1.5px solid var(--b);}
+  font-size:11px;font-weight:700;flex-shrink:0;color:var(--a1);border:1.5px solid var(--b);font-family:'Syne',sans-serif;}
 .sconnect{width:2px;background:var(--b);flex:1;margin:3px 0;}
 .srow:last-child .sconnect{display:none;}
 .scontent{padding:2px 0 14px;}
@@ -213,85 +194,84 @@ body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-seri
 .st b{color:var(--a2);font-weight:700;}
 .sexplain{font-size:12px;color:var(--dim);margin-top:4px;line-height:1.5;padding:6px 10px;
   background:rgba(255,255,255,.03);border-radius:6px;border-left:2px solid var(--b);}
-.fb-mistake{background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.15);border-radius:10px;padding:12px 14px;}
-.fb-mistake-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--a4);margin-bottom:6px;}
+.fb-mistake{background:rgba(255,95,109,.06);border:1px solid rgba(255,95,109,.15);border-radius:10px;padding:12px 14px;}
+.fb-mistake-lbl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--a4);margin-bottom:6px;font-family:'Syne',sans-serif;}
 .fb-mistake-txt{font-size:13px;color:#c8c8e8;line-height:1.6;}
 
-/* NEXT BTN */
-.next-btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--a1),#9b8fff);border:none;border-radius:14px;color:#fff;
-  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all .3s;letter-spacing:.5px;position:relative;overflow:hidden;}
-.next-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(108,99,255,.5);}
+/* ── NEXT BTN ── */
+.next-btn{width:100%;padding:16px;background:linear-gradient(135deg,var(--a1),#a599ff);border:none;
+  border-radius:14px;color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;
+  cursor:pointer;transition:all .3s;letter-spacing:.5px;text-transform:uppercase;position:relative;overflow:hidden;}
+.next-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(124,109,255,.5);}
 .next-btn:active{transform:translateY(0);}
 .next-btn.pulse{animation:pulse 1.8s ease infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(108,99,255,.6);}50%{box-shadow:0 0 0 12px rgba(108,99,255,0);}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,109,255,.6);}50%{box-shadow:0 0 0 12px rgba(124,109,255,0);}}
 
-/* PROGRESS */
+/* ── PROGRESS ── */
 .prog-wrap{height:4px;background:var(--b);border-radius:2px;margin-bottom:16px;overflow:hidden;}
 .prog-bar{height:100%;background:linear-gradient(90deg,var(--a1),var(--a3));border-radius:2px;transition:width .5s ease;}
-.streak-banner{padding:10px 16px;background:rgba(255,209,102,.1);border:1.5px solid rgba(255,209,102,.25);
-  border-radius:10px;font-family:'Syne',sans-serif;font-size:12px;color:var(--a2);
-  margin-bottom:12px;display:none;text-align:center;}
+.streak-banner{padding:10px 16px;background:rgba(255,203,71,.1);border:1.5px solid rgba(255,203,71,.25);
+  border-radius:10px;font-family:'Syne',sans-serif;font-size:12px;color:var(--a2);font-weight:700;
+  margin-bottom:12px;display:none;text-align:center;letter-spacing:.3px;}
 .streak-banner.show{display:block;}
 
-/* LEADERBOARD */
+/* ── LEADERBOARD ── */
 .lb-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;}
-.lb-title{font-family:'Syne',sans-serif;font-size:18px;font-weight:900;}
-.lb-refresh{background:none;border:1.5px solid var(--b);border-radius:8px;padding:7px 13px;color:var(--dim);font-size:12px;cursor:pointer;transition:all .2s;}
+.lb-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;}
+.lb-refresh{background:none;border:1.5px solid var(--b);border-radius:8px;padding:7px 13px;color:var(--dim);
+  font-family:'Space Grotesk',sans-serif;font-size:12px;cursor:pointer;transition:all .2s;}
 .lb-refresh:hover{border-color:var(--a1);color:var(--txt);}
-.lb-my-card{background:linear-gradient(135deg,rgba(108,99,255,.15),rgba(6,214,160,.1));border:1.5px solid var(--a1);border-radius:16px;padding:18px 22px;margin-bottom:18px;display:flex;align-items:center;gap:16px;}
-.lb-my-rank{font-family:'Syne',sans-serif;font-size:28px;font-weight:900;color:var(--a1);min-width:48px;}
-.lb-my-nick{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:4px;}
+.lb-my-card{background:linear-gradient(135deg,rgba(124,109,255,.15),rgba(0,229,160,.1));border:1.5px solid var(--a1);
+  border-radius:16px;padding:18px 22px;margin-bottom:18px;display:flex;align-items:center;gap:16px;}
+.lb-my-rank{font-family:'Syne',sans-serif;font-size:30px;font-weight:800;color:var(--a1);min-width:48px;}
+.lb-my-nick{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:4px;}
 .lb-my-pts{font-size:13px;color:var(--a2);}
 .lb-my-pts span{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;}
 .lb-list{display:flex;flex-direction:column;gap:7px;}
 .lb-row{background:var(--s1);border:1.5px solid var(--b);border-radius:14px;padding:13px 18px;display:flex;align-items:center;gap:12px;}
-.lb-row.me{border-color:var(--a1);background:rgba(108,99,255,.08);}
+.lb-row.me{border-color:var(--a1);background:rgba(124,109,255,.08);}
 .lb-pos{font-family:'Syne',sans-serif;font-size:14px;font-weight:800;min-width:34px;text-align:center;}
 .lb-pos.p1{color:var(--gold);}.lb-pos.p2{color:var(--silver);}.lb-pos.p3{color:var(--bronze);}
 .lb-avatar{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
-.lb-nick{flex:1;font-family:'Syne',sans-serif;font-size:12px;font-weight:600;}
+.lb-nick{flex:1;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;}
 .lb-nick small{display:block;font-family:'Space Grotesk',sans-serif;font-size:11px;color:var(--dim);font-weight:400;margin-top:1px;}
 .lb-score-val{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--a2);}
 .lb-score-lbl{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:1px;text-align:right;}
 .lb-empty,.lb-loading{text-align:center;padding:40px 20px;color:var(--dim);font-size:14px;}
 .pts-info{background:var(--s1);border:1.5px solid var(--b);border-radius:14px;padding:18px;margin-bottom:18px;}
-.pts-info-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;}
+.pts-info-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:800;color:var(--dim);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:12px;}
 .pts-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
 .pts-item{background:var(--s2);border-radius:10px;padding:12px;text-align:center;}
 .pts-item-val{font-family:'Syne',sans-serif;font-size:17px;font-weight:800;color:var(--a2);}
 .pts-item-lbl{font-size:10px;color:var(--dim);margin-top:2px;}
 
-/* LANG SWITCH */
+/* ── SWITCH LANG ── */
 .lang-switch{position:fixed;bottom:20px;right:20px;z-index:50;
   background:var(--s1);border:1.5px solid var(--b);border-radius:12px;
-  padding:8px 14px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;
-  color:var(--dim);cursor:pointer;transition:all .2s;letter-spacing:.5px;text-decoration:none;display:block;}
+  padding:8px 14px;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;
+  color:var(--dim);cursor:pointer;transition:all .2s;letter-spacing:.5px;}
 .lang-switch:hover{border-color:var(--a2);color:var(--a2);}
 
-/* PTS POPUP */
+/* ── PTS POPUP ── */
 .pts-popup{position:fixed;top:70px;right:20px;z-index:200;background:var(--s1);border:1.5px solid var(--a2);
-  border-radius:12px;padding:10px 18px;font-family:'Syne',sans-serif;font-size:15px;color:var(--a2);
+  border-radius:12px;padding:10px 18px;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;color:var(--a2);
   animation:popIn .4s ease;pointer-events:none;}
 @keyframes popIn{0%{opacity:0;transform:translateY(-16px)scale(.9);}60%{transform:translateY(4px)scale(1.05);}100%{opacity:1;transform:none;}}
 
-/* TOPIC STATS */
-.topic-mastery{display:flex;gap:4px;margin-bottom:14px;flex-wrap:wrap;}
-.tm-item{font-size:10px;color:var(--dim);background:var(--s2);border-radius:6px;padding:3px 8px;display:flex;align-items:center;gap:4px;}
-.tm-dot{width:6px;height:6px;border-radius:50%;}
-.tm-dot.low{background:var(--a4);}.tm-dot.mid{background:var(--a2);}.tm-dot.high{background:var(--a3);}
-
 @media(max-width:600px){
-  .card{padding:16px;}.task-q{font-size:14px;}.ans-row{flex-direction:column;}
-  .stats-row{grid-template-columns:repeat(2,1fr);gap:6px;}.modal{padding:22px;}
-  .daily-goal{padding:12px 14px;}.nav-btn{padding:8px 12px;font-size:9px;}
+  .card{padding:16px;}.task-q{font-size:15px;}.ans-row{flex-direction:column;}
+  .stats-row{gap:5px;}.modal{padding:22px;}
 }
 </style>
 </head>
 <body>
-<div class="bg-glow"></div>
-<div class="bg-grid"></div>
-<div class="wrap">
+<div class="bg-aurora">
+  <div class="aurora-1"></div>
+  <div class="aurora-2"></div>
+  <div class="aurora-3"></div>
+</div>
 
+<div class="wrap">
   <div class="topbar">
     <div class="logo">Math<em>Lab</em> <sup>GLOBAL</sup></div>
     <div class="user-bar">
@@ -304,26 +284,13 @@ body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-seri
   <div class="nav">
     <button class="nav-btn on" id="nav-train" onclick="showPage('train',this)">📚 Practice</button>
     <button class="nav-btn" id="nav-board" onclick="showPage('board',this)">🏆 Leaderboard</button>
-    <button class="nav-btn" id="nav-stats" onclick="showPage('stats',this)">📊 Progress</button>
   </div>
   <div class="nav-line"></div>
 
-  <!-- ═══ TRAIN PAGE ═══ -->
+  <!-- TRAIN PAGE -->
   <div class="page on" id="page-train">
-    <!-- Daily Goal -->
-    <div class="daily-goal" id="daily-goal">
-      <div class="dg-icon">🎯</div>
-      <div class="dg-info">
-        <div class="dg-title">Today's Goal</div>
-        <div class="dg-text">Solved: <b><span id="dg-done">0</span> of 10</b></div>
-        <div class="dg-bar"><div class="dg-fill" id="dg-fill" style="width:0%"></div></div>
-        <div class="dg-streak" id="dg-streak"></div>
-      </div>
-    </div>
-
-    <!-- Free Bar -->
     <div class="free-bar" id="free-bar">
-      <div class="free-label" id="free-label">Free: <b>★ Easy level</b></div>
+      <div class="free-label" id="free-label">Free: <b>33 of 33</b> problems left</div>
       <div class="free-prog"><div class="free-fill" id="free-fill" style="width:100%"></div></div>
       <button class="upgrade-btn" onclick="showPaywall()">⚡ Go Pro</button>
     </div>
@@ -338,24 +305,20 @@ body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-seri
     <div class="streak-banner" id="v-sban"></div>
 
     <div class="exam-row">
-      <button class="exam-btn oge on" id="btn-oge" onclick="setExam('oge')">SAT Math</button>
-      <button class="exam-btn ege" id="btn-ege" onclick="setExam('ege')">GCSE</button>
-      <button class="exam-btn vpr" id="btn-vpr" onclick="setExam('vpr')">AP Calc</button>
+      <button class="exam-btn sat on" id="btn-sat" onclick="setExam('sat')">SAT Math</button>
+      <button class="exam-btn gcse" id="btn-gcse" onclick="setExam('gcse')">GCSE</button>
+      <button class="exam-btn ap" id="btn-ap" onclick="setExam('ap')">AP Calc</button>
     </div>
-
     <div class="level-row">
       <button class="lvl-btn on" id="lvl-1" onclick="setLevel(1)">★ Easy</button>
-      <button class="lvl-btn" id="lvl-2" onclick="setLevel(2)">★★ Medium <span class="lock-icon" id="lock-2"></span></button>
-      <button class="lvl-btn" id="lvl-3" onclick="setLevel(3)">★★★ Hard <span class="lock-icon" id="lock-3"></span></button>
+      <button class="lvl-btn" id="lvl-2" onclick="setLevel(2)">★★ Medium</button>
+      <button class="lvl-btn" id="lvl-3" onclick="setLevel(3)">★★★ Hard</button>
     </div>
-
-    <div id="adapt-badge-wrap"></div>
     <div class="topic-row" id="v-topics"></div>
-    <div class="topic-mastery" id="v-mastery"></div>
     <div class="prog-wrap"><div class="prog-bar" id="v-prog" style="width:0%"></div></div>
 
     <div class="card">
-      <div class="card-bar oge" id="v-cardbar"></div>
+      <div class="card-bar sat" id="v-cardbar"></div>
       <div class="task-top">
         <div class="ttag" id="v-ttag">—</div>
         <div class="tdiff" id="v-tdiff"></div>
@@ -364,7 +327,7 @@ body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-seri
       </div>
       <div class="task-q" id="v-tq">Loading...</div>
       <div class="ans-row">
-        <input class="ans-in" id="v-input" type="text" inputmode="decimal" placeholder="Your answer" autocomplete="off" onkeydown="if(event.key==='Enter')doCheck()">
+        <input class="ans-in" id="v-input" type="text" placeholder="Enter your answer" autocomplete="off" onkeydown="if(event.key==='Enter')doCheck()">
         <button class="go-btn" id="v-checkbtn" onclick="doCheck()">Check</button>
       </div>
       <button class="hint-toggle" onclick="doHint()">💡 Hint</button>
@@ -377,10 +340,10 @@ body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-seri
     <button class="next-btn" id="next-btn" onclick="doNext()">→ Next Problem</button>
   </div>
 
-  <!-- ═══ BOARD PAGE ═══ -->
+  <!-- BOARD PAGE -->
   <div class="page" id="page-board">
     <div class="lb-header">
-      <div class="lb-title">🏆 Leaderboard</div>
+      <div class="lb-title">🏆 Global Ranking</div>
       <button class="lb-refresh" onclick="loadLeaderboard()">↻ Refresh</button>
     </div>
     <div class="pts-info">
@@ -393,27 +356,19 @@ body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-seri
     </div>
     <div class="lb-my-card">
       <div class="lb-my-rank" id="lb-myrank">—</div>
-      <div><div class="lb-my-nick" id="lb-mynick">—</div><div class="lb-my-pts">Points: <span id="lb-mypts">0</span></div></div>
+      <div><div class="lb-my-nick" id="lb-mynick">—</div><div class="lb-my-pts">Your pts: <span id="lb-mypts">0</span></div></div>
     </div>
     <div class="lb-list" id="lb-list"><div class="lb-loading">Loading...</div></div>
   </div>
-
-  <!-- ═══ STATS PAGE ═══ -->
-  <div class="page" id="page-stats">
-    <div class="lb-header">
-      <div class="lb-title">📊 Your Progress</div>
-    </div>
-    <div id="stats-content"></div>
-  </div>
 </div>
 
-<a class="lang-switch" href="mathlab.html">🇷🇺 Русская версия</a>
+<button class="lang-switch" onclick="window.location.href='index.html'">🇷🇺 Русская версия</button>
 
 <!-- NICK MODAL -->
 <div class="modal-overlay" id="nick-modal">
   <div class="modal">
     <h2>Choose your nickname</h2>
-    <p>Your nickname will appear on the leaderboard. Make it memorable! 😎</p>
+    <p>Your nickname will be visible on the global leaderboard. Make it memorable! 😎</p>
     <input class="modal-input" id="nick-input" type="text" placeholder="MathWizard99" maxlength="16" onkeydown="if(event.key==='Enter')saveNick()">
     <button class="modal-btn" onclick="saveNick()">Start Training 🚀</button>
   </div>
@@ -425,557 +380,358 @@ body{background:var(--bg);color:var(--txt);font-family:'Space Grotesk',sans-seri
     <button class="modal-close" onclick="closePaywall()">✕</button>
     <div class="pw-icon">🚀</div>
     <div class="pw-title">MathLab Pro</div>
-    <div class="pw-sub">Medium & Hard levels require Pro.<br>Unlock full access and climb the leaderboard!</div>
-
-    <div class="pw-plans">
-      <div class="pw-plan" id="plan-1" onclick="selectPlan('1m')">
-        <div class="pw-plan-dur">1 month</div>
-        <div class="pw-plan-price">$2.99</div>
-        <div class="pw-plan-per">/month</div>
-      </div>
-      <div class="pw-plan best on" id="plan-3" onclick="selectPlan('3m')">
-        <div class="pw-plan-dur">3 months</div>
-        <div class="pw-plan-price">$6.99</div>
-        <div class="pw-plan-per">≈ $2.33/mo</div>
-        <div class="pw-plan-old">$8.97</div>
-        <div class="pw-plan-save">Save 22%</div>
-      </div>
-      <div class="pw-plan" id="plan-12" onclick="selectPlan('12m')">
-        <div class="pw-plan-dur">12 months</div>
-        <div class="pw-plan-price">$19.99</div>
-        <div class="pw-plan-per">≈ $1.67/mo</div>
-        <div class="pw-plan-old">$35.88</div>
-        <div class="pw-plan-save">Save 45%</div>
-      </div>
+    <div class="pw-sub">You've used all 33 free problems.<br>Unlock unlimited access and dominate the leaderboard!</div>
+    <div class="pw-price">
+      <span class="old">$9.99</span>
+      <span class="amt">$4.99</span>
+      <span class="per">/ month</span>
     </div>
-
     <div class="pw-feats">
-      <div class="pw-f"><div class="pw-fc">✓</div><div>Medium & Hard levels — ★★ ★★★</div></div>
-      <div class="pw-f"><div class="pw-fc">✓</div><div>Unlimited SAT, GCSE & AP problems</div></div>
-      <div class="pw-f"><div class="pw-fc">✓</div><div>Adaptive difficulty matching your skill</div></div>
-      <div class="pw-f"><div class="pw-fc">✓</div><div>Step-by-step explanations with error analysis</div></div>
-      <div class="pw-f"><div class="pw-fc">✓</div><div>10× cheaper than a tutor</div></div>
+      <div class="pw-feat"><div class="pw-feat-check">✓</div><div>Unlimited SAT, GCSE & AP problems</div></div>
+      <div class="pw-feat"><div class="pw-feat-check">✓</div><div>All topics and difficulty levels</div></div>
+      <div class="pw-feat"><div class="pw-feat-check">✓</div><div>Step-by-step explanations with concept breakdowns</div></div>
+      <div class="pw-feat"><div class="pw-feat-check">✓</div><div>Global leaderboard — your score saved forever</div></div>
+      <div class="pw-feat"><div class="pw-feat-check">✓</div><div>10× cheaper than a private tutor</div></div>
     </div>
-    <button class="modal-btn gold" id="pw-pay-btn" onclick="goToPayment()">Subscribe — $6.99 / 3 months</button>
-    <button class="pw-demo" onclick="demoUnlock()">Try 5 medium problems free</button>
+    <button class="modal-btn gold" onclick="activatePro()">Subscribe — $4.99 / month</button>
+    <button class="pw-demo" onclick="demoUnlock()">Try 5 more problems for free</button>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════
+// ═══════════════════
 // CONFIG
-// ═══════════════════════════════════════════
-var FREE_LIMIT=999; // Easy is unlimited
+// ═══════════════════
+var FREE_LIMIT=33;
 var PTS={1:10,2:25,3:50};
-var STREAK_BONUS={3:5,5:15,10:30,15:50,20:100};
-var DAILY_GOAL=10;
-var PRO_TOKEN_KEY='mlen_pro_token'; // signed token from server in production
+var STREAK_BONUS={3:5,5:15,10:30};
 
-// ═══════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════
 var nick=localStorage.getItem('mlen_nick')||null;
-var isPro=verifyPro();
+var isPro=localStorage.getItem('mlen_pro')==='1';
+var freeUsed=parseInt(localStorage.getItem('mlen_free')||'0');
 var totalPts=parseInt(localStorage.getItem('mlen_pts')||'0');
-var demoTrials=parseInt(localStorage.getItem('mlen_demo')||'0');
-var S={exam:'oge',topic:'linear',level:1,correct:0,wrong:0,streak:0,total:0,sessionPts:0,task:null,done:false,autoLevel:true};
+var S={exam:'sat',topic:'algebra',level:1,correct:0,wrong:0,streak:0,total:0,sessionPts:0,task:null,done:false};
 
-// Adaptive tracking per topic
-var topicStats=JSON.parse(localStorage.getItem('mlen_tstats')||'{}');
-// Daily tracking
-var dailyData=JSON.parse(localStorage.getItem('mlen_daily')||'{}');
-var today=new Date().toISOString().slice(0,10);
-if(!dailyData[today])dailyData[today]={solved:0,correct:0};
-
-// ═══════════════════════════════════════════
-// PRO VERIFICATION (anti-cheat)
-// ═══════════════════════════════════════════
-function verifyPro(){
-  // In production: verify JWT token signature from server
-  // For MVP: obfuscated check (NOT just localStorage boolean)
-  var token=localStorage.getItem(PRO_TOKEN_KEY);
-  if(!token)return false;
-  try{
-    var parts=token.split('.');
-    if(parts.length!==3)return false;
-    var payload=JSON.parse(atob(parts[1]));
-    // Check expiry
-    if(payload.exp&&payload.exp<Date.now()/1000)return false;
-    // Check hash (in production: verify HMAC with server public key)
-    var hash=0;for(var i=0;i<(payload.sub||'').length;i++)hash=(hash*31+payload.sub.charCodeAt(i))&0x7fffffff;
-    return payload.v===hash;
-  }catch(e){return false;}
-}
-function createDemoToken(nickname,months){
-  months=months||1;
-  var payload={sub:nickname,iat:Math.floor(Date.now()/1000),exp:Math.floor(Date.now()/1000)+months*30*86400,v:0};
-  var hash=0;for(var i=0;i<nickname.length;i++)hash=(hash*31+nickname.charCodeAt(i))&0x7fffffff;
-  payload.v=hash;
-  var header=btoa(JSON.stringify({alg:'HS256',typ:'JWT'}));
-  var body=btoa(JSON.stringify(payload));
-  var sig=btoa('demo_signature');
-  return header+'.'+body+'.'+sig;
-}
-
-// ═══════════════════════════════════════════
-// TOPICS (expanded for OGE — 10+ types)
-// ═══════════════════════════════════════════
+// ═══════════════════
+// TOPICS
+// ═══════════════════
 var TOPICS={
-  oge:[
-    {id:'linear',l:'Linear Eq.'},{id:'quadratic',l:'Quadratic'},{id:'percent',l:'Percent'},
-    {id:'system',l:'Systems'},{id:'functions',l:'Functions'},{id:'inequalities',l:'Inequalities'},
-    {id:'geo',l:'Geometry'},{id:'sequence',l:'Sequences'},{id:'probability',l:'Probability'},
-    {id:'graphs',l:'Graphs'}
-  ],
-  ege:[
-    {id:'linear',l:'Linear'},{id:'quadratic',l:'Quadratic'},{id:'system',l:'Systems'},
-    {id:'functions',l:'Functions'},{id:'inequalities',l:'Inequalities'},{id:'logarithms',l:'Logarithms'},
-    {id:'trigonometry',l:'Trigonometry'},{id:'probability',l:'Probability'},{id:'derivatives',l:'Derivatives'}
-  ],
-  vpr:[
-    {id:'arith',l:'Arithmetic'},{id:'fractions',l:'Fractions'},{id:'ratio',l:'Ratios'},
-    {id:'vlinear',l:'Equations'},{id:'geo',l:'Geometry'},{id:'textproblem',l:'Word Problems'}
-  ]
+  sat:[{id:'algebra',l:'Algebra'},{id:'linear',l:'Linear Eq.'},{id:'quadratic',l:'Quadratic'},{id:'percent',l:'Percent'},{id:'ratio',l:'Ratio & Rates'},{id:'stats',l:'Statistics'}],
+  gcse:[{id:'algebra',l:'Algebra'},{id:'linear',l:'Linear Eq.'},{id:'quadratic',l:'Quadratic'},{id:'percent',l:'Percent'},{id:'geo',l:'Geometry'},{id:'stats',l:'Statistics'}],
+  ap:[{id:'limits',l:'Limits'},{id:'derivatives',l:'Derivatives'},{id:'integrals',l:'Integrals'},{id:'quadratic',l:'Polynomials'},{id:'algebra',l:'Algebra'}]
 };
 
-// ═══════════════════════════════════════════
+// ═══════════════════
 // HELPERS
-// ═══════════════════════════════════════════
+// ═══════════════════
 function rnd(a,b){return Math.floor(Math.random()*(b-a+1))+a;}
 function pick(a){return a[Math.floor(Math.random()*a.length)];}
 function r2(n){return Math.round(n*100)/100;}
 function gcd(a,b){return b?gcd(b,a%b):a;}
 
-// ═══════════════════════════════════════════
-// ADAPTIVE DIFFICULTY
-// ═══════════════════════════════════════════
-function getTopicKey(){return S.exam+'_'+S.topic;}
-function getTopicAccuracy(){
-  var k=getTopicKey();
-  var st=topicStats[k];
-  if(!st||st.total<3)return 0.5;
-  return st.correct/st.total;
-}
-function updateTopicStats(correct){
-  var k=getTopicKey();
-  if(!topicStats[k])topicStats[k]={correct:0,wrong:0,total:0};
-  topicStats[k].total++;
-  if(correct)topicStats[k].correct++;
-  else topicStats[k].wrong++;
-  localStorage.setItem('mlen_tstats',JSON.stringify(topicStats));
-}
-function getAdaptiveLevel(){
-  var acc=getTopicAccuracy();
-  var k=getTopicKey(),st=topicStats[k];
-  if(!st||st.total<5)return 1;
-  if(acc>=0.85&&st.total>=5)return 3;
-  if(acc>=0.65)return 2;
-  return 1;
-}
-function renderAdaptBadge(){
-  var wrap=document.getElementById('adapt-badge-wrap');
-  if(!S.autoLevel){wrap.innerHTML='';return;}
-  var lvl=getAdaptiveLevel();
-  var labels={1:'Easy',2:'Medium',3:'Hard'};
-  var acc=Math.round(getTopicAccuracy()*100);
-  wrap.innerHTML='<div class="adapt-badge">🤖 Auto-level: '+labels[lvl]+' (accuracy '+acc+'%)</div>';
-}
-
-// ═══════════════════════════════════════════
-// GENERATORS (expanded)
-// ═══════════════════════════════════════════
+// ═══════════════════
+// GENERATORS
+// ═══════════════════
 var GEN={
-  linear:{
+  algebra:{
     1:function(){var x=rnd(-10,10),a=rnd(2,8),b=rnd(-12,12),c=a*x+b,bs=b>=0?'+ '+b:'− '+Math.abs(b);
-      return{q:'Solve: <span class="mth">'+a+'x '+bs+' = '+c+'</span>',ans:x,diff:1,tag:'Linear',
-        concept:'Linear eq ax+b=c: move constant, divide by coefficient.',
-        hint:'Move '+b+' right, divide by '+a,
-        mistake:b>0?'When moving +'+b+' sign flips to −'+b:null,
-        steps:[{t:'Move: <b>'+a+'x = '+(c-b)+'</b>',e:'Sign flips when moving across equals.'},
-               {t:'Divide: x = '+(c-b)+'/'+a+' = <b>'+x+'</b>',e:'Divide both sides by '+a+'.'}]};},
+      return{q:'Solve for x: <span class="mth">'+a+'x '+bs+' = '+c+'</span>',ans:x,diff:1,tag:'Algebra',
+        concept:'To isolate x: move the constant to the right side (change sign), then <b>divide both sides</b> by the coefficient of x.',
+        hint:'Move '+b+' to the right, then divide both sides by '+a,
+        mistake:b>0?'When moving +'+b+' to the right, the sign becomes −'+b:null,
+        steps:[{t:'Move <b>'+b+'</b> to the right: <b>'+a+'x = '+(c-b)+'</b>',e:'When a term crosses the equals sign, its sign flips.'},
+               {t:'Divide by <b>'+a+'</b>: x = '+(c-b)+'/'+a+' = <b>'+x+'</b>',e:'Divide both sides by the coefficient to isolate x.'}]};},
     2:function(){var x=rnd(-6,6),a=rnd(2,5),b=rnd(1,8),c=rnd(1,a-1),fin=a*(x+b)-c*x+rnd(1,10),sol=r2((fin-a*b)/(a-c));
-      return{q:'Solve: <span class="mth">'+a+'(x+'+b+') = '+c+'x+'+fin+'</span>',ans:sol,diff:2,tag:'Linear',
-        concept:'Expand brackets: '+a+' multiply each term. Collect x left, numbers right.',
-        hint:'Expand: '+a+'·x + '+a+'·'+b,
-        mistake:'Don\'t forget to multiply '+a+' by BOTH terms in brackets.',
-        steps:[{t:'Expand: <b>'+a+'x+'+(a*b)+' = '+c+'x+'+fin+'</b>',e:a+' × x and '+a+' × '+b+'.'},
-               {t:'Collect: <b>'+(a-c)+'x = '+(fin-a*b)+'</b>',e:'Move x left, numbers right.'},
-               {t:'x = <b>'+sol+'</b>',e:'Divide by '+(a-c)+'.'}]};},
+      return{q:'Solve: <span class="mth">'+a+'(x + '+b+') = '+c+'x + '+fin+'</span>',ans:sol,diff:2,tag:'Algebra',
+        concept:'First <b>expand the brackets</b> by multiplying '+a+' by each term inside. Then collect like terms (all x on one side, numbers on the other).',
+        hint:'Expand: '+a+'·x and '+a+'·'+b+' = '+(a*b),
+        mistake:'Don\'t forget to multiply '+a+' by BOTH terms inside the brackets.',
+        steps:[{t:'Expand: <b>'+a+'x + '+(a*b)+' = '+c+'x + '+fin+'</b>',e:a+' × x = '+a+'x and '+a+' × '+b+' = '+(a*b)+'.'},
+               {t:'Collect x terms: <b>'+(a-c)+'x = '+(fin-a*b)+'</b>',e:a+'x − '+c+'x = '+(a-c)+'x. Numbers: '+fin+' − '+(a*b)+' = '+(fin-a*b)+'.'},
+               {t:'x = '+(fin-a*b)+'/'+(a-c)+' = <b>'+sol+'</b>',e:'Divide by '+(a-c)+'.'}]};},
     3:function(){var a=rnd(2,5),b=rnd(2,6),c=rnd(2,8),lcm=a*b/gcd(a,b),ans=r2(c*a*b/(a+b));
-      return{q:'Solve: <span class="mth">x/'+a+' + x/'+b+' = '+c+'</span>',ans:ans,diff:3,tag:'Linear',
-        concept:'Fraction equation — multiply both sides by LCM('+a+','+b+') = '+lcm+'.',
-        hint:'LCM('+a+','+b+') = '+lcm+'. Multiply both sides by '+lcm,
-        mistake:'Multiply right side too!',
-        steps:[{t:'LCM = <b>'+lcm+'</b>',e:'Least common multiple of denominators.'},
-               {t:'×'+lcm+': <b>'+(lcm/a)+'x+'+(lcm/b)+'x = '+(c*lcm)+'</b>',e:'Fractions eliminated.'},
-               {t:(lcm/a+lcm/b)+'x = '+(c*lcm)+' → x = <b>'+ans+'</b>',e:'Add and divide.'}]};}
+      return{q:'Solve: <span class="mth">x/'+a+' + x/'+b+' = '+c+'</span>',ans:ans,diff:3,tag:'Algebra',
+        concept:'Multiply every term by the <b>LCM of the denominators</b> to eliminate fractions. LCM('+a+','+b+') = '+lcm+'.',
+        hint:'Multiply both sides by LCM = '+lcm,
+        mistake:'Multiply the right side by the LCM too, not just the left!',
+        steps:[{t:'LCM('+a+','+b+') = <b>'+lcm+'</b>',e:'Smallest number divisible by both denominators.'},
+               {t:'× '+lcm+': <b>'+(lcm/a)+'x + '+(lcm/b)+'x = '+(c*lcm)+'</b>',e:'Fractions eliminated: '+lcm+'/'+a+' = '+(lcm/a)+', '+lcm+'/'+b+' = '+(lcm/b)+'.'},
+               {t:(lcm/a+lcm/b)+'x = '+(c*lcm)+' → x = <b>'+ans+'</b>',e:'Collect and divide.'}]};}
+  },
+  linear:{
+    1:function(){var m=rnd(1,5),b=rnd(-8,8),x=rnd(-5,5),y=m*x+b,bs=b>=0?'+ '+b:'− '+Math.abs(b);
+      return{q:'Line: <span class="mth">y = '+m+'x '+bs+'</span>. Find y when x = '+x+'.',ans:y,diff:1,tag:'Linear',
+        concept:'To find a y-value, <b>substitute</b> the given x into the equation. The slope-intercept form y = mx + b tells you: m is the slope, b is where the line crosses the y-axis.',
+        hint:'Substitute x = '+x+' directly into the equation',
+        mistake:null,
+        steps:[{t:'y = '+m+'·('+x+') '+bs,e:'Replace x with '+x+'.'},
+               {t:'= '+(m*x)+' '+bs+' = <b>'+y+'</b>',e:'Multiply first, then add/subtract.'}]};},
+    2:function(){var m1=rnd(1,4),b1=rnd(-5,5),m2=rnd(1,4),b2=rnd(-5,5),xsol=b2===b1&&m1===m2?1:r2((b2-b1)/(m1-m2)),ysol=r2(m1*xsol+b1);
+      if(m1===m2)m2=m1+1;
+      var b1s=b1>=0?'+ '+b1:'− '+Math.abs(b1),b2s=b2>=0?'+ '+b2:'− '+Math.abs(b2),xsol2=r2((b2-b1)/(m1-m2)),ysol2=r2(m1*xsol2+b1);
+      return{q:'Find x where the lines intersect:<br><span class="mth">y = '+m1+'x '+b1s+'</span><br><span class="mth">y = '+m2+'x '+b2s+'</span>',ans:xsol2,diff:2,tag:'Linear',
+        concept:'Lines intersect where y is equal for both equations. Set them <b>equal to each other</b> and solve for x.',
+        hint:'Set '+m1+'x '+b1s+' = '+m2+'x '+b2s,
+        mistake:null,
+        steps:[{t:m1+'x '+b1s+' = '+m2+'x '+b2s,e:'Both equations equal y, so they equal each other.'},
+               {t:'<b>'+(m1-m2)+'x = '+(b2-b1)+'</b>',e:'Collect x terms on one side.'},
+               {t:'x = <b>'+xsol2+'</b>',e:'Divide by '+(m1-m2)+'.'}]};},
+    3:function(){var m=pick([-3,-2,-1,1,2,3]),x1=rnd(-4,4),y1=rnd(-4,4),b=y1-m*x1,bs=b>=0?'+ '+b:'− '+Math.abs(b);
+      return{q:'A line passes through <b>('+x1+', '+y1+')</b> with slope <b>'+m+'</b>. Find the y-intercept.',ans:b,diff:3,tag:'Linear',
+        concept:'Use point-slope form: y − y₁ = m(x − x₁), then rearrange to slope-intercept form y = mx + b to find the y-intercept.',
+        hint:'Plug into y = mx + b: '+y1+' = '+m+'·'+x1+' + b',
+        mistake:null,
+        steps:[{t:'y = mx + b → '+y1+' = '+m+'·'+x1+' + b',e:'Substitute the known point and slope.'},
+               {t:''+y1+' = '+(m*x1)+' + b → b = '+y1+' − '+(m*x1),e:'Isolate b.'},
+               {t:'b = <b>'+b+'</b>',e:'This is where the line crosses the y-axis.'}]};}
   },
   quadratic:{
-    1:function(){var x=rnd(1,12);
-      return{q:'Positive root: <span class="mth">x² = '+(x*x)+'</span>',ans:x,diff:1,tag:'Quadratic',
-        concept:'x² = N → x = ±√N. The ± gives two solutions.',
-        hint:'√'+(x*x)+' = ?',mistake:null,
-        steps:[{t:'x = ±√'+(x*x),e:'Square root gives two values.'},
-               {t:'Positive: x = <b>'+x+'</b>',e:'Choose +√.'}]};},
+    1:function(){var x=rnd(1,10);
+      return{q:'Find the <b>positive</b> solution: <span class="mth">x² = '+(x*x)+'</span>',ans:x,diff:1,tag:'Quadratic',
+        concept:'Taking the square root of both sides gives x = ±√N. The ± means there are two solutions. We want the positive one.',
+        hint:'Square root both sides — remember ±',
+        mistake:null,
+        steps:[{t:'x = ±√'+(x*x),e:'Square root gives two solutions.'},
+               {t:'Positive solution: x = <b>'+x+'</b>',e:'We choose the positive value.'}]};},
     2:function(){var x1=rnd(-5,5),x2=rnd(-5,5),B=-(x1+x2),C=x1*x2,D=B*B-4*C;
       var bs=B>=0?'+ '+B+'x':'− '+Math.abs(B)+'x',cs=C>=0?'+ '+C:'− '+Math.abs(C);
-      return{q:'Largest root: <span class="mth">x²'+bs+' '+cs+' = 0</span>',ans:Math.max(x1,x2),diff:2,tag:'Quadratic',
-        concept:'Discriminant D = b²−4ac. Roots: x = (−b ± √D) / 2a.',
-        hint:'D = ('+B+')² − 4·1·('+C+')',
-        mistake:'Don\'t forget the 4: D = b²−<b>4</b>ac.',
-        steps:[{t:'D = '+B+'²−4·'+C+' = '+(B*B)+'−'+(4*C)+' = <b>'+D+'</b>',e:'D > 0 → two roots.'},
-               {t:'x = (−('+B+')±√'+D+')/2',e:'Quadratic formula.'},
-               {t:'Largest: <b>'+Math.max(x1,x2)+'</b>',e:'Use + in ±.'}]};},
+      return{q:'Largest root of: <span class="mth">x² '+bs+' '+cs+' = 0</span>',ans:Math.max(x1,x2),diff:2,tag:'Quadratic',
+        concept:'Use the <b>quadratic formula</b>: x = (−b ± √(b²−4ac)) / 2a. The discriminant D = b²−4ac determines how many real roots exist.',
+        hint:'a=1, b='+(B)+', c='+C+'. Find D = b²−4ac first.',
+        mistake:'Don\'t forget the coefficient 4 in D = b²−<b>4</b>ac.',
+        steps:[{t:'D = ('+B+')² − 4(1)('+C+') = '+(B*B)+' − '+(4*C)+' = <b>'+D+'</b>',e:'Positive discriminant → two distinct real roots.'},
+               {t:'x = (−'+B+' ± √'+D+') / 2',e:'Apply the quadratic formula.'},
+               {t:'Roots: <b>'+Math.min(x1,x2)+'</b> and <b>'+Math.max(x1,x2)+'</b> → largest = <b>'+Math.max(x1,x2)+'</b>',e:'The + gives the larger root.'}]};},
     3:function(){var x1=pick([-4,-3,-2,-1,1,2,3,4]),x2=pick([-4,-3,-2,-1,1,2,3,4]),a=pick([2,3]),B=-a*(x1+x2),C=a*x1*x2;
       var bs=B>=0?'+ '+B+'x':'− '+Math.abs(B)+'x',cs=C>=0?'+ '+C:'− '+Math.abs(C);
-      return{q:'Product of roots: <span class="mth">'+a+'x²'+bs+' '+cs+' = 0</span>',ans:x1*x2,diff:3,tag:'Quadratic',
-        concept:'Vieta\'s: product of roots = c/a.',
-        hint:'x₁·x₂ = c/a = '+C+'/'+a,mistake:null,
-        steps:[{t:'By Vieta\'s: x₁·x₂ = c/a = '+C+'/'+a+' = <b>'+(C/a)+'</b>',e:'No need to find roots separately.'},
-               {t:'Check: '+x1+'×'+x2+' = <b>'+(x1*x2)+'</b> ✓',e:'Correct.'}]};}
+      return{q:'Product of roots: <span class="mth">'+a+'x² '+bs+' '+cs+' = 0</span>',ans:x1*x2,diff:3,tag:'Quadratic',
+        concept:'<b>Vieta\'s formulas</b>: for ax²+bx+c=0, the product of roots = c/a. A shortcut that avoids solving the full equation!',
+        hint:'Product of roots = c/a = '+C+'/'+a,
+        mistake:null,
+        steps:[{t:'By Vieta\'s: x₁·x₂ = c/a',e:'No need to find the actual roots — Vieta\'s gives us the product directly.'},
+               {t:'= '+C+'/'+a+' = <b>'+(C/a)+'</b>',e:'Divide the constant term by the leading coefficient.'},
+               {t:'Check: '+x1+' × '+x2+' = <b>'+(x1*x2)+'</b> ✓',e:'Verification.'}]};}
   },
   percent:{
-    1:function(){var price=rnd(10,200)*100,pct=pick([5,10,20,25]),disc=price*pct/100;
-      return{q:'Item costs <b>$'+price+'</b>. <b>'+pct+'% off</b>. How much saved?',ans:disc,diff:1,tag:'Percent',
-        concept:'p% of N = N × p / 100.',hint:'Discount = '+price+' × '+pct+'/100',mistake:null,
-        steps:[{t:price+' × '+pct+'/100 = <b>'+disc+'</b>',e:pct+'% = '+(pct/100)+'.'}]};},
-    2:function(){var base=rnd(10,80)*1000,pct=pick([5,8,10,12,15]),res=base*(1+pct/100);
-      return{q:'$'+base+' at <b>'+pct+'% annual</b>. Total after 1 year?',ans:res,diff:2,tag:'Percent',
-        concept:'Total = principal × (1 + rate/100).',hint:'Total = '+base+' × '+(1+pct/100),
-        mistake:'Don\'t forget to add the principal!',
-        steps:[{t:'Interest = '+base+' × '+pct+'/100 = <b>'+(base*pct/100)+'</b>',e:pct+'% of principal.'},
-               {t:'Total = '+base+' + '+(base*pct/100)+' = <b>'+res+'</b>',e:'Principal + interest.'}]};},
-    3:function(){var res=rnd(20,80)*100,pct=pick([25,40,50]),orig=r2(res*100/(100-pct));
-      return{q:'After <b>'+pct+'% off</b>, price is <b>$'+res+'</b>. Original?',ans:orig,diff:3,tag:'Percent',
-        concept:'After discount, '+(100-pct)+'%. Original = new ÷ '+(1-pct/100)+'.',
+    1:function(){var price=rnd(10,200)*10,pct=pick([5,10,20,25]),disc=price*pct/100;
+      return{q:'An item costs <b>$'+price+'</b>. There\'s a <b>'+pct+'% discount</b>. How much is saved?',ans:disc,diff:1,tag:'Percent',
+        concept:'To find p% of a number N: multiply N by p/100 (or equivalently, by the decimal 0.0p).',
+        hint:'Discount = '+price+' × '+pct+'/100',
+        mistake:null,
+        steps:[{t:'Discount = '+price+' × '+(pct/100),e:'Convert percent to decimal: '+pct+'% = '+(pct/100)+'.'},
+               {t:'= <b>$'+disc+'</b>',e:'This is the amount saved.'}]};},
+    2:function(){var base=rnd(1,10)*1000,pct=pick([5,8,10,12,15]),res=base*(1+pct/100);
+      return{q:'$'+base+' is invested at <b>'+pct+'% annual interest</b>. What is the total after 1 year?',ans:res,diff:2,tag:'Percent',
+        concept:'Total = Principal × (1 + rate). The "1" represents keeping the original amount; you\'re adding the interest on top.',
+        hint:'Total = '+base+' × (1 + '+pct+'/100)',
+        mistake:'Don\'t forget to add the original principal back — not just the interest!',
+        steps:[{t:'Interest = '+base+' × '+(pct/100)+' = $'+(base*pct/100),e:pct+'% of $'+base+'.'},
+               {t:'Total = '+base+' + '+(base*pct/100)+' = <b>$'+res+'</b>',e:'Principal plus interest.'}]};},
+    3:function(){var res=rnd(20,80)*10,pct=pick([20,25,40]),orig=r2(res*100/(100-pct));
+      return{q:'After a <b>'+pct+'% discount</b>, an item costs <b>$'+res+'</b>. What was the original price?',ans:orig,diff:3,tag:'Percent',
+        concept:'After a '+pct+'% discount, '+(100-pct)+'% of the original remains. So: new price = original × '+(100-pct)+'/100. Reverse this to find original.',
         hint:'Original = '+res+' ÷ '+(1-pct/100),
-        mistake:'Can\'t just add '+pct+'% to $'+res+'!',
-        steps:[{t:''+(100-pct)+'% remains: Original = '+res+' ÷ '+(1-pct/100),e:'Divide by coefficient.'},
-               {t:'= <b>'+orig+'</b>',e:'Original price.'}]};}
+        mistake:'You can\'t just add '+pct+'% to $'+res+' — that gives the wrong answer because the percentage is of the original price.',
+        steps:[{t:'New price = Original × '+(100-pct)+'/100',e:'Only '+(100-pct)+'% of the original remains after a '+pct+'% cut.'},
+               {t:'Original = '+res+' ÷ '+(1-pct/100)+' = <b>$'+orig+'</b>',e:'Divide by the decimal multiplier.'}]};}
   },
-  system:{
-    1:function(){var x=rnd(1,9),y=rnd(1,9);
-      return{q:'Find <b>x</b>:<br><span class="mth">x+y = '+(x+y)+'</span><br><span class="mth">x−y = '+(x-y)+'</span>',ans:x,diff:1,tag:'Systems',
-        concept:'Addition method: +y and −y cancel.',hint:'Add both equations',mistake:null,
-        steps:[{t:'(x+y)+(x−y) = '+(x+y)+'+'+(x-y),e:'y cancels.'},
-               {t:'2x = '+(2*x)+' → x = <b>'+x+'</b>',e:'Divide by 2.'}]};},
-    2:function(){var x=rnd(1,6),y=rnd(1,6),a1=rnd(2,4),b1=rnd(1,3),a2=rnd(1,3),b2=rnd(2,4),c1=a1*x+b1*y,c2=a2*x+b2*y;
-      return{q:'Find <b>y</b>:<br><span class="mth">'+a1+'x+'+b1+'y = '+c1+'</span><br><span class="mth">'+a2+'x+'+b2+'y = '+c2+'</span>',ans:y,diff:2,tag:'Systems',
-        concept:'Elimination: multiply equations so x coefficients match, subtract.',
-        hint:'Multiply 1-е by '+a2+', 2-е by '+a1,
-        mistake:'Multiply ALL terms!',
-        steps:[{t:'×'+a2+': '+(a1*a2)+'x+'+(b1*a2)+'y = '+(c1*a2),e:'Coefficient of x = '+(a1*a2)+'.'},
-               {t:'×'+a1+': '+(a2*a1)+'x+'+(b2*a1)+'y = '+(c2*a1),e:'Also '+(a1*a2)+'.'},
-               {t:'Subtract: '+(b1*a2-b2*a1)+'y = '+(c1*a2-c2*a1)+' → y = <b>'+y+'</b>',e:'x canceled.'}]};},
-    3:function(){var x=rnd(1,5),y=rnd(1,5);
-      return{q:'System:<br><span class="mth">x²+y² = '+(x*x+y*y)+'</span><br><span class="mth">x+y = '+(x+y)+'</span><br>Find <b>x·y</b>',ans:x*y,diff:3,tag:'Systems',
-        concept:'(x+y)² = x²+2xy+y². Knowing x+y and x²+y², find xy.',
-        hint:'(x+y)² = x²+y² + 2xy',
-        mistake:'(a+b)² ≠ a²+b²! Correct: (a+b)² = a²+<b>2ab</b>+b².',
-        steps:[{t:(x+y)+'² = '+(x*x+y*y)+' + 2xy → '+(x+y)*(x+y)+'='+(x*x+y*y)+'+2xy',e:'Substitute.'},
-               {t:'2xy = '+((x+y)*(x+y)-(x*x+y*y))+' → xy = <b>'+x*y+'</b>',e:'Divide by 2.'}]};}
+  ratio:{
+    1:function(){var a=rnd(2,8),b=rnd(2,8),mult=rnd(2,6),ans=b*mult;
+      return{q:'If '+a+' books cost <b>$'+(a*mult)+'</b>, how much do <b>'+b+' books</b> cost?',ans:ans,diff:1,tag:'Ratio',
+        concept:'Direct proportion: cost per book is constant. Find the unit price, then multiply by the new quantity.',
+        hint:'Unit price = $'+(a*mult)+' ÷ '+a,
+        mistake:null,
+        steps:[{t:'Unit price: $'+(a*mult)+' ÷ '+a+' = <b>$'+mult+'</b>',e:'Divide total cost by number of items.'},
+               {t:'$'+mult+' × '+b+' = <b>$'+ans+'</b>',e:'Multiply unit price by new quantity.'}]};},
+    2:function(){var a=rnd(2,6),b=rnd(2,6),total=(a+b)*rnd(3,8),big=r2(total*Math.max(a,b)/(a+b));
+      return{q:'Split <b>'+total+'</b> in the ratio <b>'+a+' : '+b+'</b>. Find the <b>larger</b> share.',ans:big,diff:2,tag:'Ratio',
+        concept:'Total parts = '+a+' + '+b+' = '+(a+b)+'. One part = total ÷ '+(a+b)+'. Multiply by the share you want.',
+        hint:'One part = '+total+' ÷ '+(a+b),
+        mistake:'Don\'t split 50/50 — the ratio tells you the shares are different!',
+        steps:[{t:'One part: '+total+' ÷ '+(a+b)+' = '+r2(total/(a+b)),e:'Total divided by sum of ratio parts.'},
+               {t:'Larger share ('+Math.max(a,b)+' parts): <b>'+big+'</b>',e:'Multiply one part by '+Math.max(a,b)+'.'}]};},
+    3:function(){var speed=rnd(40,80),t1=rnd(2,4),dist=speed*t1,t2=rnd(2,5),ans=r2(dist/t2);
+      return{q:'A car travels <b>'+dist+' miles</b> in <b>'+t1+' hours</b>. What speed is needed to cover the same distance in <b>'+t2+' hours</b>?',ans:ans,diff:3,tag:'Ratio',
+        concept:'Speed = Distance ÷ Time. The distance is fixed — only the time changes. Find the new speed using the same distance.',
+        hint:'Speed = '+dist+' ÷ '+t2,
+        mistake:'The distance doesn\'t change — don\'t recalculate it.',
+        steps:[{t:'Distance = <b>'+dist+' miles</b> (unchanged)',e:'Same journey, different speed.'},
+               {t:'New speed = '+dist+' ÷ '+t2+' = <b>'+ans+' mph</b>',e:'Distance divided by new time.'}]};}
   },
-  functions:{
-    1:function(){var a=rnd(2,6),b=rnd(-8,8),xv=rnd(-5,5),res=a*xv+b,bs=b>=0?'+ '+b:'− '+Math.abs(b);
-      return{q:'<span class="mth">f(x) = '+a+'x '+bs+'</span> — find <b>f('+xv+')</b>',ans:res,diff:1,tag:'Functions',
-        concept:'f(a) = substitute a for x.',hint:'Substitute x = '+xv,mistake:null,
-        steps:[{t:'f('+xv+') = '+a+'·('+xv+') '+bs+' = '+(a*xv)+' '+bs+' = <b>'+res+'</b>',e:'Substitute and calculate.'}]};},
-    2:function(){var a=rnd(1,3),b=rnd(-4,4),c=rnd(-6,6),xv=rnd(-3,3),res=a*xv*xv+b*xv+c;
-      var bs=b>=0?'+ '+b+'x':'− '+Math.abs(b)+'x',cs=c>=0?'+ '+c:'− '+Math.abs(c);
-      return{q:'<span class="mth">f(x)='+a+'x²'+bs+' '+cs+'</span> — f('+xv+') = ?',ans:res,diff:2,tag:'Functions',
-        concept:'Order: power → multiply → add.',hint:xv+'² = '+(xv*xv),
-        mistake:xv<0?'('+xv+')² = '+(xv*xv)+' — negative to even power gives positive!':null,
-        steps:[{t:'x² = ('+xv+')² = '+(xv*xv),e:'Raise to power.'},{t:a+'·'+(xv*xv)+' + ('+b+')·('+xv+') + ('+c+') = <b>'+res+'</b>',e:'Substitute.'}]};},
-    3:function(){var a=rnd(1,3),b=rnd(-6,6),c=rnd(-6,6),vx=r2(-b/(2*a)),vy=r2(a*vx*vx+b*vx+c);
-      var bs=b>=0?'+'+b+'x':'−'+Math.abs(b)+'x',cs=c>=0?'+'+c:'−'+Math.abs(c);
-      return{q:'Parabola <span class="mth">y='+a+'x²'+bs+cs+'</span> — vertex y?',ans:vy,diff:3,tag:'Functions',
-        concept:'Vertex x = −b/(2a). Substitute into equation.',hint:'x₀ = −('+b+')/(2·'+a+')',mistake:null,
-        steps:[{t:'x₀ = −('+b+')/(2·'+a+') = <b>'+vx+'</b>',e:'Vertex formula.'},
-               {t:'y = '+a+'·('+vx+')²+... = <b>'+vy+'</b>',e:'Substitute x₀.'}]};}
-  },
-  inequalities:{
-    1:function(){var a=rnd(2,6),b=rnd(-10,10),c=rnd(-10,10),sol=r2((c-b)/a),bs=b>=0?'+ '+b:'− '+Math.abs(b);
-      return{q:'<span class="mth">'+a+'x'+bs+' &lt; '+c+'</span> — largest <b>integer</b> solution?',ans:Math.ceil(sol)-1,diff:1,tag:'Inequalities',
-        concept:'Solve like equation. When dividing by negative — sign flips!',
-        hint:'x < '+sol+', largest integer below',mistake:null,
-        steps:[{t:a+'x < '+(c-b)+' → x < '+sol,e:'Move and divide.'},
-               {t:'Largest integer: <b>'+(Math.ceil(sol)-1)+'</b>',e:'Strictly less than '+sol+'.'}]};},
-    2:function(){var x1=rnd(-4,-1),x2=rnd(1,5),a=1,B=-(x1+x2),C=x1*x2;
-      var bs=B>=0?'+'+B+'x':'−'+Math.abs(B)+'x',cs=C>=0?'+'+C:'−'+Math.abs(C);
-      return{q:'How many integers: <span class="mth">x²'+bs+cs+' ≤ 0</span>?',ans:x2-x1+1,diff:2,tag:'Inequalities',
-        concept:'Parabola up: ≤ 0 between roots.',hint:'Find roots, count integers between them',
-        mistake:'With ≤ the roots ARE included!',
-        steps:[{t:'Roots: '+x1+' and '+x2,e:'Solve the equation.'},{t:'Integers from '+x1+' to '+x2+': <b>'+(x2-x1+1)+'</b>',e:'Count inclusive.'}]};},
-    3:function(){var x1=rnd(-4,-1),x2=rnd(1,5),B=-(x1+x2),C=x1*x2;
-      var bs=B>=0?'+'+B+'x':'−'+Math.abs(B)+'x',cs=C>=0?'+'+C:'−'+Math.abs(C);
-      return{q:'Solution length: <span class="mth">x²'+bs+cs+' &lt; 0</span>',ans:x2-x1,diff:3,tag:'Inequalities',
-        concept:'Solution is interval (x₁;x₂). Length = x₂−x₁.',hint:'Length = right root − left',mistake:null,
-        steps:[{t:'Roots: '+x1+' and '+x2,e:'Solve the equation.'},{t:'Length = '+x2+'−('+x1+') = <b>'+(x2-x1)+'</b>',e:'Right minus left.'}]};}
+  stats:{
+    1:function(){var nums=[rnd(2,15),rnd(2,15),rnd(2,15),rnd(2,15),rnd(2,15)],sum=nums.reduce(function(a,b){return a+b;},0),ans=r2(sum/nums.length);
+      return{q:'Find the <b>mean</b> of: <span class="mth">'+nums.join(', ')+'</span>',ans:ans,diff:1,tag:'Statistics',
+        concept:'Mean (average) = sum of all values ÷ number of values. It\'s the "balance point" of the data set.',
+        hint:'Add all numbers, then divide by '+nums.length,
+        mistake:null,
+        steps:[{t:'Sum: '+nums.join(' + ')+' = <b>'+sum+'</b>',e:'Add all values.'},
+               {t:'Mean = '+sum+' ÷ '+nums.length+' = <b>'+ans+'</b>',e:'Divide by the count of numbers.'}]};},
+    2:function(){var nums=[rnd(2,15),rnd(2,15),rnd(2,15),rnd(2,15),rnd(2,15)].sort(function(a,b){return a-b;});
+      var ans=nums[2];
+      return{q:'Find the <b>median</b> of: <span class="mth">'+nums.join(', ')+'</span>',ans:ans,diff:2,tag:'Statistics',
+        concept:'Median = the middle value when data is sorted. For 5 values, the median is the 3rd value (position (5+1)/2 = 3).',
+        hint:'Data is already sorted — find the middle value',
+        mistake:'The data must be in order first! Always sort before finding the median.',
+        steps:[{t:'Sorted: '+nums.join(', '),e:'Already sorted — confirm the order.'},
+               {t:'Middle value (position 3 of 5): <b>'+ans+'</b>',e:'5 values → median is the 3rd one.'}]};},
+    3:function(){var mean=rnd(10,50),n=rnd(4,8),sum=mean*n,extra=rnd(5,30),newmean=r2((sum+extra)/(n+1));
+      return{q:'A set of <b>'+n+' numbers</b> has a mean of <b>'+mean+'</b>. A new number <b>'+extra+'</b> is added. What is the new mean?',ans:newmean,diff:3,tag:'Statistics',
+        concept:'Work backwards from the mean: total sum = mean × count. Add the new value, divide by the new count.',
+        hint:'Original total sum = '+mean+' × '+n+' = '+(mean*n),
+        mistake:'Don\'t average the two means — you need to work with the actual sum.',
+        steps:[{t:'Original sum = '+mean+' × '+n+' = <b>'+(mean*n)+'</b>',e:'Reverse-engineer the total from the mean.'},
+               {t:'New sum = '+(mean*n)+' + '+extra+' = <b>'+(sum+extra)+'</b>',e:'Add the new number.'},
+               {t:'New mean = '+(sum+extra)+' ÷ '+(n+1)+' = <b>'+newmean+'</b>',e:'Divide by new count ('+(n+1)+').'}]};}
   },
   geo:{
     1:function(){var a=rnd(2,15),b=rnd(2,15),ans=2*(a+b);
-      return{q:'Rectangle sides <b>'+a+'</b> and <b>'+b+'</b>. Perimeter?',ans:ans,diff:1,tag:'Geometry',
-        concept:'P = 2(a+b).',hint:'P = 2×('+a+'+'+b+')',mistake:null,
-        steps:[{t:'P = 2('+a+'+'+b+') = 2×'+(a+b)+' = <b>'+ans+'</b>',e:'Two pairs of sides.'}]};},
-    2:function(){var r=rnd(2,10),ans=r2(Math.PI*r*r);
-      return{q:'Circle r=<b>'+r+'</b>. Area? (π≈3.14, 2 decimals)',ans:ans,diff:2,tag:'Geometry',
-        concept:'A = πr². Square r first, then ×π.',hint:'S = π×'+r+'² = π×'+(r*r),
-        mistake:'Don\'t forget to SQUARE the radius: r², not r.',
-        steps:[{t:'r² = '+(r*r),e:'Square the radius.'},{t:'S = π×'+(r*r)+' ≈ <b>'+ans+'</b>',e:'Multiply by π.'}]};},
-    3:function(){var a=rnd(3,12),b=rnd(3,12),c=r2(Math.sqrt(a*a+b*b));
-      return{q:'Right triangle legs <b>'+a+'</b>,<b>'+b+'</b>. Hypotenuse? (2 dec)',ans:c,diff:3,tag:'Geometry',
-        concept:'Pythagorean theorem: c² = a² + b².',hint:'c = √('+a+'²+'+b+'²)',mistake:null,
-        steps:[{t:'c² = '+a+'²+'+b+'² = '+(a*a)+'+'+(b*b)+' = '+(a*a+b*b),e:'Square the legs.'},{t:'c = √'+(a*a+b*b)+' ≈ <b>'+c+'</b>',e:'Take the root.'}]};}
+      return{q:'A rectangle has sides <b>'+a+'</b> and <b>'+b+'</b>. Find the perimeter.',ans:ans,diff:1,tag:'Geometry',
+        concept:'Perimeter = sum of all sides. For a rectangle with length a and width b: P = 2(a + b).',
+        hint:'P = 2 × ('+a+' + '+b+')',
+        mistake:null,
+        steps:[{t:'P = 2('+a+' + '+b+') = 2 × '+(a+b)+' = <b>'+ans+'</b>',e:'Two pairs of equal sides.'}]};},
+    2:function(){var r=rnd(2,12),ans=r2(Math.PI*r*r);
+      return{q:'A circle has radius <b>'+r+'</b>. Find the area. (Use π ≈ 3.14, round to 2 decimal places)',ans:ans,diff:2,tag:'Geometry',
+        concept:'Area of a circle: A = πr². Square the radius first, then multiply by π (≈ 3.14159...).',
+        hint:'A = π × '+r+'²= π × '+(r*r),
+        mistake:'Don\'t forget to SQUARE the radius. A = π<b>r²</b>, not πr.',
+        steps:[{t:'r² = '+r+'² = '+(r*r),e:'Square the radius first.'},
+               {t:'A = π × '+(r*r)+' ≈ 3.14159 × '+(r*r)+' = <b>'+ans+'</b>',e:'Multiply by π.'}]};},
+    3:function(){var a=rnd(3,12),b=rnd(3,12),c=Math.round(Math.sqrt(a*a+b*b));var aa=c*c-b*b;var ra=Math.round(Math.sqrt(aa));
+      return{q:'Right triangle: legs <b>'+ra+'</b> and <b>'+b+'</b>. Find the hypotenuse.',ans:c,diff:3,tag:'Geometry',
+        concept:'The Pythagorean theorem: a² + b² = c², where c is the hypotenuse (the longest side, opposite the right angle).',
+        hint:'c = √('+ra+'² + '+b+'²)',
+        mistake:'The hypotenuse is always the side opposite the right angle — the longest side.',
+        steps:[{t:'c² = '+ra+'² + '+b+'² = '+(ra*ra)+' + '+(b*b)+' = '+(ra*ra+b*b),e:'Square both legs and add.'},
+               {t:'c = √'+(ra*ra+b*b)+' = <b>'+Math.round(Math.sqrt(ra*ra+b*b))+'</b>',e:'Take the square root.'}]};}
   },
-  sequence:{
-    1:function(){var a1=rnd(1,10),d=rnd(1,5),n=rnd(5,10),ans=a1+d*(n-1);
-      return{q:'Arithmetic sequence: a₁=<b>'+a1+'</b>, d=<b>'+d+'</b>. Find a<sub>'+n+'</sub>.',ans:ans,diff:1,tag:'Sequences',
-        concept:'aₙ = a₁ + d(n−1).',hint:'a'+n+' = '+a1+' + '+d+'×'+(n-1),mistake:null,
-        steps:[{t:'a'+n+' = '+a1+' + '+d+'·'+(n-1)+' = '+a1+'+'+(d*(n-1))+' = <b>'+ans+'</b>',e:'nth term formula.'}]};},
-    2:function(){var a1=rnd(1,5),d=rnd(1,4),n=rnd(5,10),sum=n*(2*a1+d*(n-1))/2;
-      return{q:'Sum of '+n+' terms AP: a₁=<b>'+a1+'</b>, d=<b>'+d+'</b>.',ans:sum,diff:2,tag:'Sequences',
-        concept:'Sₙ = n(2a₁+d(n−1))/2.',hint:'S = '+n+'×(2·'+a1+'+'+d+'·'+(n-1)+')/2',mistake:null,
-        steps:[{t:'S = '+n+'(2·'+a1+'+'+d+'·'+(n-1)+')/2',e:'Sum formula for AP.'},
-               {t:'= '+n+'·'+(2*a1+d*(n-1))+'/2 = <b>'+sum+'</b>',e:'Calculate.'}]};},
-    3:function(){var a1=rnd(1,4),q=pick([2,3]),n=rnd(3,6),ans=a1*Math.pow(q,n-1);
-      return{q:'Geometric sequence: b₁=<b>'+a1+'</b>, q=<b>'+q+'</b>. Find b<sub>'+n+'</sub>.',ans:ans,diff:3,tag:'Sequences',
-        concept:'bₙ = b₁ × q^(n−1).',hint:'b'+n+' = '+a1+' × '+q+'^'+(n-1),mistake:null,
-        steps:[{t:'b'+n+' = '+a1+' × '+q+'^'+(n-1)+' = '+a1+' × '+Math.pow(q,n-1)+' = <b>'+ans+'</b>',e:'GP formula.'}]};}
-  },
-  probability:{
-    1:function(){var total=pick([6,8,10,12,20]),fav=rnd(1,total-1),p=r2(fav/total);
-      return{q:''+total+' balls, '+fav+' red. P(red)? (decimal)',ans:p,diff:1,tag:'Probability',
-        concept:'P = favorable / total outcomes.',hint:'P = '+fav+'/'+total,mistake:null,
-        steps:[{t:'P = '+fav+'/'+total+' = <b>'+p+'</b>',e:'Divide.'}]};},
-    2:function(){var total=pick([5,10,20]),fav=rnd(1,total-1),p=r2(1-fav/total);
-      return{q:''+fav+' of '+total+' tickets win. P(NOT winning)?',ans:p,diff:2,tag:'Probability',
-        concept:'P(not A) = 1 − P(A).',hint:'1 − '+fav+'/'+total,mistake:null,
-        steps:[{t:'P(win) = '+fav+'/'+total+' = '+r2(fav/total),e:'Direct probability.'},
-               {t:'P(не) = 1 − '+r2(fav/total)+' = <b>'+p+'</b>',e:'Complement event.'}]};},
-    3:function(){var n1=rnd(1,3),d1=rnd(n1+1,6),n2=rnd(1,3),d2=rnd(n2+1,6),p=r2((n1/d1)*(n2/d2));
-      return{q:'P₁='+n1+'/'+d1+', P₂='+n2+'/'+d2+'. P(both)? (independent)',ans:p,diff:3,tag:'Probability',
-        concept:'Independent: P(A∩B) = P(A)×P(B).',hint:'Multiply '+n1+'/'+d1+' by '+n2+'/'+d2,mistake:null,
-        steps:[{t:r2(n1/d1)+' × '+r2(n2/d2)+' = <b>'+p+'</b>',e:'Product of probabilities.'}]};}
-  },
-  graphs:{
-    1:function(){var m=rnd(1,5),b=rnd(-6,6),bs=b>=0?'+ '+b:'− '+Math.abs(b);
-      return{q:'Line <span class="mth">y='+m+'x '+bs+'</span>. What is <b>y</b> when x=0?',ans:b,diff:1,tag:'Graphs',
-        concept:'At x=0, we get the y-intercept: y = b.',hint:'Substitute x=0',mistake:null,
-        steps:[{t:'y = '+m+'·0 '+bs+' = <b>'+b+'</b>',e:'Point (0,'+b+') on y-axis.'}]};},
-    2:function(){var m=rnd(-3,3),b=rnd(-5,5);if(m===0)m=1;
-      var x0=r2(-b/m);
-      return{q:'<span class="mth">y='+m+'x'+(b>=0?'+'+b:b)+'</span>. At what x does it cross the X-axis?',ans:x0,diff:2,tag:'Graphs',
-        concept:'X-axis: y=0. Solve 0 = mx+b.',hint:'0 = '+m+'x + '+b,mistake:null,
-        steps:[{t:'0 = '+m+'x + '+b+' → x = '+(-b)+'/'+m+' = <b>'+x0+'</b>',e:'y=0 on X-axis.'}]};},
-    3:function(){var a=pick([1,2,-1,-2]),b=rnd(-4,4),c=rnd(-5,5);
-      var vx=r2(-b/(2*a)),vy=r2(a*vx*vx+b*vx+c);
-      var dir=a>0?'up':'down';
-      return{q:'Parabola <span class="mth">y='+a+'x²'+(b>=0?'+'+b:''+b)+'x'+(c>=0?'+'+c:''+c)+'</span>. Branches direction?<br>Enter 1 for up, -1 for down.',ans:a>0?1:-1,diff:3,tag:'Graphs',
-        concept:'a > 0 → branches up. a < 0 → branches down.',hint:'Check sign of x²: a = '+a,mistake:null,
-        steps:[{t:'a = '+a+' → '+(a>0?'a > 0 → ':'a < 0 → ')+'branches <b>'+dir+'</b>',e:'Sign of x² determines direction.'}]};}
-  },
-  logarithms:{
-    1:function(){var base=pick([2,3,5,10]),exp=rnd(2,5),val=Math.pow(base,exp);
-      return{q:'Evaluate: <span class="mth">log<sub>'+base+'</sub>('+val+')</span>',ans:exp,diff:1,tag:'Logarithms',
-        concept:'log_b(a) = x → b^x = a.',hint:base+' to what power = '+val+'?',mistake:null,
-        steps:[{t:base+'^'+exp+' = '+val+' → log = <b>'+exp+'</b>',e:'The exponent.'}]};},
-    2:function(){var base=pick([2,3,5]),x=rnd(2,4),y=rnd(2,4),lx=r2(Math.log(x)/Math.log(base)),ly=r2(Math.log(y)/Math.log(base));
-      return{q:'log<sub>'+base+'</sub>('+x+')≈'+lx+', log<sub>'+base+'</sub>('+y+')≈'+ly+'<br>log<sub>'+base+'</sub>('+(x*y)+') = ?',ans:r2(lx+ly),diff:2,tag:'Logarithms',
-        concept:'log(a·b) = log(a)+log(b).',hint:'Factor '+(x*y)+' = '+x+'·'+y,mistake:'log(a+b) ≠ log(a)+log(b)!',
-        steps:[{t:'log('+x+'·'+y+') = log('+x+')+log('+y+') = '+lx+'+'+ly+' = <b>'+r2(lx+ly)+'</b>',e:'Log product rule.'}]};},
-    3:function(){var base=pick([2,3,5,10]),ans=rnd(2,5);
-      return{q:'Solve: <span class="mth">log<sub>'+base+'</sub>(x) = '+ans+'</span>',ans:Math.pow(base,ans),diff:3,tag:'Logarithms',
-        concept:'log_b(x) = n → x = b^n.',hint:'x = '+base+'^'+ans,mistake:'x ≠ base × n — use exponentiation!',
-        steps:[{t:'x = '+base+'^'+ans+' = <b>'+Math.pow(base,ans)+'</b>',e:'Convert to exponential form.'}]};}
-  },
-  trigonometry:{
-    1:function(){var angles=[0,30,45,60,90],vals=[0,0.5,r2(Math.sqrt(2)/2),r2(Math.sqrt(3)/2),1];
-      var idx=pick([1,2,3]);
-      return{q:'sin(<b>'+angles[idx]+'°</b>) = ? (2 decimals)',ans:vals[idx],diff:1,tag:'Trigonometry',
-        concept:'Table values of sin: sin30°=0.5, sin45°≈0.71, sin60°≈0.87.',hint:'Recall the table',mistake:null,
-        steps:[{t:'sin('+angles[idx]+'°) = <b>'+vals[idx]+'</b>',e:'Table value.'}]};},
-    2:function(){var a=pick([30,45,60]),sinA=r2(Math.sin(a*Math.PI/180)),cosA=r2(Math.cos(a*Math.PI/180));
-      var ans=r2(sinA/cosA);
-      return{q:'tan(<b>'+a+'°</b>) = ? (2 decimals)',ans:ans,diff:2,tag:'Trigonometry',
-        concept:'tan(α) = sin(α)/cos(α).',hint:'tan = sin/cos, sin('+a+'°)='+sinA+', cos('+a+'°)='+cosA,mistake:null,
-        steps:[{t:'tg('+a+'°) = sin('+a+'°)/cos('+a+'°) = '+sinA+'/'+cosA+' = <b>'+ans+'</b>',e:'Definition of tangent.'}]};},
-    3:function(){var a=pick([30,45,60]);
-      var ans=r2(Math.sin(a*Math.PI/180)*Math.sin(a*Math.PI/180)+Math.cos(a*Math.PI/180)*Math.cos(a*Math.PI/180));
-      return{q:'sin²('+a+'°) + cos²('+a+'°) = ?',ans:1,diff:3,tag:'Trigonometry',
-        concept:'Fundamental identity: sin²α + cos²α = 1 for ANY angle.',hint:'Fundamental trig identity',mistake:null,
-        steps:[{t:'sin²α + cos²α = <b>1</b>',e:'Always equals 1, regardless of angle.'}]};}
+  limits:{
+    1:function(){var a=rnd(1,5),b=rnd(1,5),c=rnd(-3,3),ans=a*c+b;
+      return{q:'Evaluate: <span class="mth">lim<sub>x→'+c+'</sub> ('+a+'x + '+b+')</span>',ans:ans,diff:1,tag:'Limits',
+        concept:'For a polynomial, the limit as x→c is found by <b>direct substitution</b>: simply plug in x = c.',
+        hint:'Substitute x = '+c+' directly',
+        mistake:null,
+        steps:[{t:'Substitute x = '+c+': '+a+'('+c+') + '+b,e:'Polynomials are continuous — direct substitution works.'},
+               {t:'= '+(a*c)+' + '+b+' = <b>'+ans+'</b>',e:'Simplify.'}]};},
+    2:function(){var a=rnd(1,4),ans=2*a;
+      return{q:'Evaluate: <span class="mth">lim<sub>x→'+a+'</sub> (x² − '+a*a+') / (x − '+a+')</span>',ans:ans,diff:2,tag:'Limits',
+        concept:'Direct substitution gives 0/0 — an indeterminate form. <b>Factor the numerator</b> as a difference of squares: x² − a² = (x+a)(x−a).',
+        hint:'Factor: x² − '+(a*a)+' = (x + '+a+')(x − '+a+')',
+        mistake:'You can\'t just substitute when you get 0/0 — you must simplify first.',
+        steps:[{t:'= (x+'+a+')(x−'+a+') / (x−'+a+')',e:'Factor numerator as difference of squares.'},
+               {t:'= (x + '+a+')  [cancel (x−'+a+')]',e:'Cancel the common factor.'},
+               {t:'lim = '+a+' + '+a+' = <b>'+ans+'</b>',e:'Now substitute x = '+a+'.'}]};},
+    3:function(){var a=rnd(2,6),ans=0;
+      return{q:'Evaluate: <span class="mth">lim<sub>x→∞</sub> '+a+' / x</span>',ans:ans,diff:3,tag:'Limits',
+        concept:'As x grows without bound, a constant divided by x approaches 0. The numerator stays fixed while the denominator grows infinitely large.',
+        hint:'What happens to '+a+'/x as x becomes enormous?',
+        mistake:'This does NOT equal 1 — '+a+' divided by infinity approaches 0.',
+        steps:[{t:'As x → ∞, denominator grows without bound',e:'Numerator '+a+' stays constant.'},
+               {t:a+' / (very large number) → 0',e:'A fixed number divided by ∞ = 0.'},
+               {t:'lim = <b>0</b>',e:'Classic result: c/x → 0 as x → ∞.'}]};}
   },
   derivatives:{
     1:function(){var n=rnd(2,6),c=rnd(1,5),ans=n*c;
-      return{q:'f(x) = '+c+'x<sup>'+n+'</sup>. Coefficient of x<sup>'+(n-1)+'</sup> in f\'(x)?',ans:ans,diff:1,tag:'Derivatives',
-        concept:'Power rule: d/dx[xⁿ] = n·x^(n−1).',hint:'Multiply '+c+' by '+n,mistake:null,
-        steps:[{t:'f\'(x) = '+c+'·'+n+'·x^'+(n-1)+' = <b>'+ans+'</b>x^'+(n-1),e:'Bring down power, reduce by 1.'}]};},
-    2:function(){var a=rnd(2,5),b=rnd(1,8),x=rnd(1,4),ans=a*b*Math.pow(x,b-1);
-      return{q:'f(x) = '+a+'x<sup>'+b+'</sup>. Slope at x='+x+'?',ans:ans,diff:2,tag:'Derivatives',
-        concept:'f′(x) gives the slope. Calculate f′(x) and substitute.',hint:'f\'(x)='+a+'·'+b+'x^'+(b-1)+', substitute '+x,mistake:null,
-        steps:[{t:'f\'(x) = '+(a*b)+'x^'+(b-1),e:'Derivative.'},{t:'f\'('+x+') = '+(a*b)+'·'+Math.pow(x,b-1)+' = <b>'+ans+'</b>',e:'Substitute.'}]};},
+      return{q:'Differentiate: <span class="mth">f(x) = '+c+'x<sup>'+n+'</sup></span><br>Find <b>f\'(x)</b> at the coefficient (the number in front of x<sup>'+(n-1)+'</sup>)',ans:ans,diff:1,tag:'Derivatives',
+        concept:'Power Rule: d/dx[xⁿ] = n·xⁿ⁻¹. Multiply by the exponent, reduce the power by 1. The constant coefficient comes along for the ride.',
+        hint:'Multiply the coefficient '+c+' by the power '+n,
+        mistake:null,
+        steps:[{t:'f\'(x) = '+c+' · '+n+' · x^('+(n-1)+')',e:'Bring down the exponent, reduce power by 1.'},
+               {t:'f\'(x) = <b>'+ans+'</b>x^'+(n-1),e:'The coefficient of x^'+(n-1)+' is '+ans+'.'}]};},
+    2:function(){var a=rnd(2,5),b=rnd(1,8),x=rnd(1,5),ans=a*b*Math.pow(x,b-1);
+      return{q:'f(x) = x<sup>'+b+'</sup>. Find the <b>slope</b> at x = '+x+'.',ans:ans,diff:2,tag:'Derivatives',
+        concept:'The derivative f\'(x) gives the slope of the tangent at any point. Use Power Rule to get f\'(x), then substitute x = '+x+'.',
+        hint:'f\'(x) = '+b+'x^'+(b-1)+', then plug in x = '+x,
+        mistake:null,
+        steps:[{t:'f\'(x) = '+b+'x^'+(b-1),e:'Power rule: bring down '+b+', reduce power.'},
+               {t:'f\'('+x+') = '+b+' · '+x+'^'+(b-1)+' = '+b+' · '+Math.pow(x,b-1),e:'Substitute x = '+x+'.'},
+               {t:'= <b>'+ans+'</b>',e:'This is the slope of the tangent line at x = '+x+'.'}]};},
     3:function(){var a=rnd(2,4),b=rnd(2,5),c=rnd(1,5),ans=a*b;
-      return{q:'f(x) = '+a+'x<sup>'+b+'</sup>−'+c+'x+7. Coefficient of x<sup>'+(b-1)+'</sup> in f\'(x)?',ans:ans,diff:3,tag:'Derivatives',
-        concept:'Differentiate term by term. Constant 7 vanishes.',hint:'('+a+'x^'+b+')\' = '+a+'·'+b+'x^'+(b-1),mistake:null,
-        steps:[{t:'('+a+'x^'+b+')\' = '+ans+'x^'+(b-1),e:'Power rule.'},
-               {t:'(−'+c+'x)\' = −'+c+', (7)\' = 0',e:'Linear and constant.'},
-               {t:'Coefficient: <b>'+ans+'</b>',e:'Answer.'}]};}
+      return{q:'f(x) = '+a+'x<sup>'+b+'</sup> − '+c+'x + 7<br>Find the <b>coefficient of x<sup>'+(b-1)+'</sup></b> in f\'(x).',ans:ans,diff:3,tag:'Derivatives',
+        concept:'Differentiate term by term. Power rule on '+a+'x^'+b+' → '+a+'·'+b+'x^'+(b-1)+'. The −'+c+'x term becomes −'+c+'. The constant 7 disappears.',
+        hint:'Differentiate each term separately',
+        mistake:'Constants (like +7) vanish when differentiated — their derivative is 0.',
+        steps:[{t:'d/dx['+a+'x^'+b+'] = '+a+'·'+b+'·x^'+(b-1)+' = '+ans+'x^'+(b-1),e:'Power rule on the first term.'},
+               {t:'d/dx[−'+c+'x] = −'+c+', d/dx[7] = 0',e:'Derivative of linear term and constant.'},
+               {t:'f\'(x) = '+ans+'x^'+(b-1)+' − '+c,e:'Combined result.'},
+               {t:'Coefficient of x^'+(b-1)+': <b>'+ans+'</b>',e:'The answer requested.'}]};}
   },
-  // VPR/AP topics
-  arith:{
-    1:function(){var a=rnd(12,99),b=rnd(12,99),ans=a+b;
-      return{q:'Evaluate: <span class="mth">'+a+' + '+b+'</span>',ans:ans,diff:1,tag:'Arithmetic',
-        concept:'Add by place value.',hint:'Units + units, tens + tens',mistake:null,
-        steps:[{t:a+' + '+b+' = <b>'+ans+'</b>',e:'Calculate.'}]};},
-    2:function(){var a=rnd(12,50),b=rnd(12,30),c=rnd(2,9),ans=a*b-c;
-      return{q:'<span class="mth">'+a+' × '+b+' − '+c+'</span>',ans:ans,diff:2,tag:'Arithmetic',
-        concept:'Multiplication before subtraction.',hint:'First '+a+'×'+b,
-        mistake:'Multiplication BEFORE subtraction!',
-        steps:[{t:a+'×'+b+' = '+(a*b),e:'Multiply.'},{t:(a*b)+'−'+c+' = <b>'+ans+'</b>',e:'Subtract.'}]};},
-    3:function(){var a=rnd(100,999),b=rnd(10,49),ans=Math.floor(a/b);
-      return{q:'<span class="mth">'+a+' ÷ '+b+'</span> — <b>quotient</b> (integer part)?',ans:ans,diff:3,tag:'Arithmetic',
-        concept:'Dividend = divisor × quotient + remainder.',hint:'How many times does '+b+' go into '+a+'?',mistake:null,
-        steps:[{t:b+'×'+ans+' = '+(b*ans)+' ≤ '+a,e:'Largest multiple.'},{t:'Quotient = <b>'+ans+'</b>',e:'Remainder: '+(a-b*ans)+'.'}]};}
-  },
-  fractions:{
-    1:function(){var d=pick([2,4,5,10]),n1=rnd(1,d-1),n2=rnd(1,d-1),ans=r2((n1+n2)/d);
-      return{q:'<span class="mth">'+n1+'/'+d+' + '+n2+'/'+d+'</span> (decimal)',ans:ans,diff:1,tag:'Fractions',
-        concept:'Same denominators — add numerators.',hint:n1+'+'+n2+' = '+(n1+n2)+', denominator '+d,mistake:null,
-        steps:[{t:(n1+n2)+'/'+d+' = <b>'+ans+'</b>',e:'Add numerators.'}]};},
-    2:function(){var d1=pick([2,3,4]),d2=pick([3,5,6]),n1=rnd(1,d1),n2=rnd(1,d2),L=d1*d2/gcd(d1,d2),ans=r2((n1*(L/d1)+n2*(L/d2))/L);
-      return{q:'<span class="mth">'+n1+'/'+d1+' + '+n2+'/'+d2+'</span> (decimal)',ans:ans,diff:2,tag:'Fractions',
-        concept:'Convert to common denominator LCM('+d1+','+d2+')='+L+'.',hint:'LCM = '+L,
-        mistake:'Can\'t add numerators with different denominators!',
-        steps:[{t:'LCM = '+L+': '+(n1*(L/d1))+'/'+L+' + '+(n2*(L/d2))+'/'+L,e:'Convert.'},{t:'= <b>'+ans+'</b>',e:'Add.'}]};},
-    3:function(){var w=rnd(1,5),d=pick([2,3,4,5]),n=rnd(1,d-1),mult=rnd(2,4),ans=r2((w+n/d)*mult);
-      return{q:'<span class="mth">'+w+' '+n+'/'+d+' × '+mult+'</span> (decimal)',ans:ans,diff:3,tag:'Fractions',
-        concept:'Mixed → improper fraction: '+w+'×'+d+'+'+n+' = '+(w*d+n)+'.',hint:(w*d+n)+'/'+d+' × '+mult,
-        mistake:'Multiply the WHOLE number, not just the integer part!',
-        steps:[{t:w+' '+n+'/'+d+' = '+(w*d+n)+'/'+d,e:'Convert.'},{t:'×'+mult+' = <b>'+ans+'</b>',e:'Multiply.'}]};}
-  },
-  ratio:{
-    1:function(){var price=rnd(3,15),n1=rnd(2,6),n2=rnd(2,8),ans=price*n2;
-      return{q:n1+' items cost <b>$'+(price*n1)+'</b>. Cost of <b>'+n2+'</b> items?',ans:ans,diff:1,tag:'Ratios',
-        concept:'Unit price is constant.',hint:'Unit price = '+(price*n1)+'/'+n1,mistake:null,
-        steps:[{t:'1 кг = '+(price*n1)+'/'+n1+' = '+price+'',e:'Divide.'},{t:price+'×'+n2+' = <b>'+ans+'</b>',e:'Multiply.'}]};},
-    2:function(){var a=rnd(2,6),b=rnd(2,6),total=(a+b)*rnd(3,8),big=r2(total*Math.max(a,b)/(a+b));
-      return{q:'Split <b>'+total+'</b> in ratio '+a+':'+b+'. Larger share?',ans:big,diff:2,tag:'Ratios',
-        concept:'One part = '+total+'/'+(a+b)+'.',hint:'Part = '+total+'÷'+(a+b),mistake:'Not 50/50!',
-        steps:[{t:'Part: '+r2(total/(a+b)),e:total+'÷'+(a+b)+'.'},{t:'Larger: <b>'+big+'</b>',e:'×'+Math.max(a,b)+' parts.'}]};},
-    3:function(){var v=rnd(40,80),t1=rnd(2,4),d=v*t1,t2=rnd(2,5),ans=r2(d/t2);
-      return{q:'<b>'+d+' miles</b> in <b>'+t1+' hrs</b>. Speed for <b>'+t2+' hrs</b>?',ans:ans,diff:3,tag:'Ratios',
-        concept:'v = S/t. Distance is constant.',hint:'v = '+d+'/'+t2,mistake:null,
-        steps:[{t:'v = '+d+'/'+t2+' = <b>'+ans+' mph</b>',e:'Same distance.'}]};}
-  },
-  vlinear:{
-    1:function(){var x=rnd(1,15),a=rnd(2,6),b=rnd(1,20),c=a*x+b;
-      return{q:'<span class="mth">'+a+'x + '+b+' = '+c+'</span>',ans:x,diff:1,tag:'Equations',
-        concept:'Move the constant, divide.',hint:'Move '+b+', divide by '+a,mistake:null,
-        steps:[{t:a+'x = '+(c-b)+' → x = <b>'+x+'</b>',e:'Solve.'}]};},
-    2:function(){var x=rnd(1,10),a=rnd(2,5),b=rnd(1,8),c=rnd(1,5),d=a*x+b+c*x;
-      return{q:'<span class="mth">'+a+'x + '+b+' + '+c+'x = '+d+'</span>',ans:x,diff:2,tag:'Equations',
-        concept:'Like terms: '+a+'x+'+c+'x = '+(a+c)+'x.',hint:'Add '+a+'x and '+c+'x',mistake:null,
-        steps:[{t:(a+c)+'x + '+b+' = '+d+' → x = <b>'+x+'</b>',e:'Combine like terms.'}]};},
-    3:function(){var x=rnd(1,8),a=rnd(2,4),b=rnd(1,6),c=rnd(1,3),fin=a*(x+b)-c;
-      return{q:'<span class="mth">'+a+'(x+'+b+') − '+c+' = '+fin+'</span>',ans:x,diff:3,tag:'Equations',
-        concept:'Expand brackets, solve.',hint:'Expand: '+a+'×x + '+a+'×'+b,
-        mistake:'Sign applies to to ALL terms inside!',
-        steps:[{t:a+'x+'+(a*b)+'−'+c+' = '+fin+' → x = <b>'+x+'</b>',e:'Expanded and solved.'}]};}
-  },
-  textproblem:{
-    1:function(){var price=rnd(2,8)*10,n=rnd(2,8),given=Math.ceil(price*n/100)*100,ans=given-price*n;
-      return{q:n+' items at $'+price+'/ea. Paid $'+given+'. Change?',ans:ans,diff:1,tag:'Word Problems',
-        concept:'Change = paid − cost.',hint:'Cost: '+price+'×'+n,mistake:null,
-        steps:[{t:'Cost: '+(price*n)+'',e:'Price × quantity.'},{t:'Change: '+given+'−'+(price*n)+' = <b>'+ans+'</b>',e:'Paid − cost.'}]};},
-    2:function(){var speed=rnd(4,12),time=rnd(2,5),ans=speed*time;
-      return{q:'Speed <b>'+speed+' km/h</b>, time <b>'+time+' h</b>. Distance?',ans:ans,diff:2,tag:'Word Problems',
-        concept:'S = v × t.',hint:'S = '+speed+'×'+time,mistake:null,
-        steps:[{t:'S = '+speed+'×'+time+' = <b>'+ans+' км</b>',e:'Distance formula.'}]};},
-    3:function(){var w=rnd(3,6),d=rnd(2,5),total=w*d,nw=rnd(2,w-1),ans=Math.ceil(total/nw);
-      return{q:w+' workers — '+d+' days. '+nw+' workers — how many days?',ans:ans,diff:3,tag:'Word Problems',
-        concept:'Inverse proportion: work = w×d = const.',
-        hint:'Work = '+w+'×'+d+' = '+total,
-        mistake:'Fewer workers → MORE days!',
-        steps:[{t:'Work: '+total+' worker-days',e:'Constant.'},{t:'Days: '+total+'/'+nw+' = <b>'+ans+'</b>',e:'Divide by new workers.'}]};}
+  integrals:{
+    1:function(){var n=rnd(1,5),c=rnd(1,6),ans=r2(c/(n+1));
+      return{q:'∫ <span class="mth">'+c+'x<sup>'+n+'</sup></span> dx — find the coefficient of x<sup>'+(n+1)+'</sup> (no +C)',ans:ans,diff:1,tag:'Integrals',
+        concept:'Power Rule for integration (reverse of differentiation): ∫xⁿ dx = x^(n+1)/(n+1) + C. Increase the power by 1, divide by the new power.',
+        hint:'New power = '+n+'+1 = '+(n+1)+'. Divide '+c+' by '+(n+1)+'.',
+        mistake:'Add 1 to the exponent, then DIVIDE by that new exponent. (Opposite of differentiation.)',
+        steps:[{t:'∫'+c+'x^'+n+' dx = '+c+' · x^'+(n+1)+'/'+(n+1),e:'Increase power by 1, divide by new power.'},
+               {t:'Coefficient = '+c+'/'+(n+1)+' = <b>'+ans+'</b>',e:'Simplify the fraction.'}]};},
+    2:function(){var a=rnd(1,5),b=rnd(2,6),ans=r2(a*b*b/2-a*1/2);
+      var realAns=r2(a*(b*b-1)/2);
+      return{q:'Evaluate: <span class="mth">∫₁^'+b+' '+a+'x dx</span>',ans:realAns,diff:2,tag:'Integrals',
+        concept:'Definite integral = area under the curve. Integrate to get F(x), then compute F(upper) − F(lower).',
+        hint:'Integrate to get '+a+'x²/2, then evaluate from 1 to '+b,
+        mistake:'Remember to subtract F(lower limit) from F(upper limit).',
+        steps:[{t:'∫'+a+'x dx = '+a+'x²/2',e:'Antiderivative using power rule.'},
+               {t:'F('+b+') − F(1) = '+a+'·'+(b*b)+'/2 − '+a+'·1/2',e:'Evaluate at upper then lower bound.'},
+               {t:'= '+(a*b*b/2)+' − '+(a/2)+' = <b>'+realAns+'</b>',e:'Subtract.'}]};},
+    3:function(){var a=rnd(1,4),ans=0;
+      return{q:'Evaluate: <span class="mth">∫₋'+a+'^'+a+' x³ dx</span>',ans:ans,diff:3,tag:'Integrals',
+        concept:'f(x) = x³ is an <b>odd function</b>: f(−x) = −f(x). The integral of an odd function over a symmetric interval [−a, a] is always 0.',
+        hint:'Is x³ an odd or even function?',
+        mistake:'Don\'t calculate this the long way! Recognize the symmetry.',
+        steps:[{t:'f(x) = x³ is odd: f(−x) = (−x)³ = −x³ = −f(x)',e:'Test for odd symmetry.'},
+               {t:'For odd f over [−'+a+', '+a+']: ∫f dx = 0',e:'The positive and negative areas cancel exactly.'},
+               {t:'Answer = <b>0</b>',e:'Symmetric cancellation — elegant shortcut!'}]};}
   }
 };
 
-// ═══════════════════════════════════════════
+// ═══════════════════
 // AVATARS
-// ═══════════════════════════════════════════
-var AVATARS=['🦊','🐯','🦁','🐻','🐼','🦋','🐙','🦄','🦅','🐺','🐲','🦈','🦉','🦚','🦜','🦩','🐬'];
-var AV_COLORS=['rgba(108,99,255,.2)','rgba(6,214,160,.2)','rgba(255,209,102,.2)','rgba(255,107,107,.2)','rgba(56,189,248,.2)'];
+// ═══════════════════
+var AVATARS=['🦊','🐯','🦁','🐻','🐼','🦋','🐙','🦄','🦅','🐺','🐲','🦈','🦉','🦚','🦜','🦩','🐬','🦋'];
+var AV_COLORS=['rgba(124,109,255,.2)','rgba(0,229,160,.2)','rgba(255,203,71,.2)','rgba(255,95,109,.2)','rgba(56,189,248,.2)'];
 function getAvatar(n){var h=0;for(var i=0;i<n.length;i++)h=(h*31+n.charCodeAt(i))%AVATARS.length;return AVATARS[h];}
 function getAvCol(n){var h=0;for(var i=0;i<n.length;i++)h=(h*31+n.charCodeAt(i))%AV_COLORS.length;return AV_COLORS[h];}
 
-// ═══════════════════════════════════════════
-// FREE BAR (Easy free, Medium/Hard = Pro)
-// ═══════════════════════════════════════════
+// ═══════════════════
+// FREE BAR
+// ═══════════════════
 function updateFreeBar(){
   if(isPro){document.getElementById('free-bar').style.display='none';return;}
-  document.getElementById('free-bar').style.display='flex';
-  document.getElementById('free-label').innerHTML='Free: <b>★ Easy level</b>';
-  document.getElementById('free-fill').style.width='100%';
-  // Lock icons on level buttons
-  document.getElementById('lock-2').textContent=isPro?'':'🔒';
-  document.getElementById('lock-3').textContent=isPro?'':'🔒';
+  var rem=Math.max(0,FREE_LIMIT-freeUsed);
+  document.getElementById('free-label').innerHTML='Free: <b>'+rem+' of '+FREE_LIMIT+'</b> problems left';
+  document.getElementById('free-fill').style.width=Math.max(0,(rem/FREE_LIMIT)*100)+'%';
 }
-function isLevelBlocked(lvl){return !isPro && lvl>1 && demoTrials<=0;}
+function isBlocked(){return !isPro&&freeUsed>=FREE_LIMIT;}
 
-// ═══════════════════════════════════════════
-// PAYWALL + PLANS
-// ═══════════════════════════════════════════
-var PLANS={
-  '1m':{label:'1 month',price:299,months:1,btnText:'Subscribe — $2.99 / month'},
-  '3m':{label:'3 months',price:699,months:3,btnText:'Subscribe — $6.99 / 3 months'},
-  '12m':{label:'12 months',price:1999,months:12,btnText:'Subscribe — $19.99 / year'}
-};
-var selectedPlan='3m';
-
-function selectPlan(id){
-  selectedPlan=id;
-  document.querySelectorAll('.pw-plan').forEach(function(p){p.classList.remove('on');});
-  document.getElementById('plan-'+id.replace('m','')).classList.add('on');
-  document.getElementById('pw-pay-btn').textContent=PLANS[id].btnText;
-}
+// ═══════════════════
+// PAYWALL
+// ═══════════════════
 function showPaywall(){document.getElementById('paywall-modal').classList.add('show');}
 function closePaywall(){document.getElementById('paywall-modal').classList.remove('show');}
-
-function goToPayment(){
-  // In production: redirect to payment.html with plan info
-  var plan=PLANS[selectedPlan];
-  var payUrl='payment.html?plan='+selectedPlan+'&price='+plan.price+'&months='+plan.months+'&nick='+(nick||'');
-  // For demo: activate directly. Replace with: window.location.href=payUrl;
-  activatePro(plan.months);
-}
-function activatePro(months){
-  months=months||1;
-  var token=createDemoToken(nick||'demo',months);
-  localStorage.setItem(PRO_TOKEN_KEY,token);
-  isPro=true;
+function activatePro(){
+  isPro=true;localStorage.setItem('mlen_pro','1');
   document.getElementById('paywall-modal').classList.remove('show');
   updateFreeBar();
-  alert('✅ Demo: Pro activated for '+months+' months!\n\nIn production: redirect to payment.html → Stripe.');
+  alert('✅ Demo: Pro activated!\n\nIn production, this connects to Stripe payment.');
   loadTask();
 }
 function demoUnlock(){
-  demoTrials+=5;
-  localStorage.setItem('mlen_demo',demoTrials);
+  freeUsed=Math.max(0,freeUsed-5);localStorage.setItem('mlen_free',freeUsed);
   document.getElementById('paywall-modal').classList.remove('show');
-  loadTask();
+  updateFreeBar();loadTask();
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════
 // NICK
-// ═══════════════════════════════════════════
+// ═══════════════════
 function showNickModal(){
   document.getElementById('nick-modal').classList.add('show');
   document.getElementById('nick-input').value=nick||'';
   setTimeout(function(){document.getElementById('nick-input').focus();},100);
 }
 function saveNick(){
-  var v=document.getElementById('nick-input').value.trim().replace(/[^a-zA-Z0-9_]/g,'');
-  if(v.length<2){alert('Min 2 characters!');return;}
+  var v=document.getElementById('nick-input').value.trim().replace(/\s+/g,'');
+  if(v.length<2){alert('Minimum 2 characters!');return;}
   nick=v;localStorage.setItem('mlen_nick',v);
   document.getElementById('nick-modal').classList.remove('show');
   updateNickUI();loadUserScore();
@@ -987,53 +743,20 @@ function updateNickUI(){
   }
 }
 
-// ═══════════════════════════════════════════
-// DAILY GOAL
-// ═══════════════════════════════════════════
-function updateDailyGoal(){
-  var d=dailyData[today]||{solved:0,correct:0};
-  document.getElementById('dg-done').textContent=d.solved;
-  document.getElementById('dg-fill').style.width=Math.min(100,d.solved/DAILY_GOAL*100)+'%';
-  // Render streak days
-  var wrap=document.getElementById('dg-streak');wrap.innerHTML='';
-  var dayNames=['Mo','Tu','We','Th','Fr','Sa','Su'];
-  var now=new Date();var dow=now.getDay();if(dow===0)dow=7;
-  for(var i=1;i<=7;i++){
-    var dt=new Date(now);dt.setDate(dt.getDate()-(dow-i));
-    var key=dt.toISOString().slice(0,10);
-    var dd=dailyData[key];
-    var div=document.createElement('div');
-    div.className='dg-day'+(dd&&dd.solved>=DAILY_GOAL?' done':'')+(i===dow?' today':'');
-    div.textContent=(dd&&dd.solved>=DAILY_GOAL)?'✓':dayNames[i-1];
-    wrap.appendChild(div);
-  }
-}
-function recordDailySolve(){
-  if(!dailyData[today])dailyData[today]={solved:0,correct:0};
-  dailyData[today].solved++;
-  localStorage.setItem('mlen_daily',JSON.stringify(dailyData));
-  updateDailyGoal();
-  // Check if just completed goal
-  if(dailyData[today].solved===DAILY_GOAL){
-    showPtsPopup('🎯 Daily goal complete!');
-  }
-}
-
-// ═══════════════════════════════════════════
+// ═══════════════════
 // NAV
-// ═══════════════════════════════════════════
+// ═══════════════════
 function showPage(id,btn){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('on');});
   document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('on');});
   document.getElementById('page-'+id).classList.add('on');
   btn.classList.add('on');
-  if(id==='board')loadLeaderboard();
-  if(id==='stats')renderStatsPage();
+  if(id==='board') loadLeaderboard();
 }
 
-// ═══════════════════════════════════════════
+// ═══════════════════
 // STORAGE
-// ═══════════════════════════════════════════
+// ═══════════════════
 async function loadUserScore(){
   if(!nick)return;
   try{var r=await window.storage.get('enscore:'+nick,true);if(r)totalPts=parseInt(r.value)||0;}catch(e){}
@@ -1044,19 +767,16 @@ async function loadUserScore(){
 async function saveScore(){
   if(!nick)return;
   localStorage.setItem('mlen_pts',totalPts);
-  // Anti-cheat: include hash of score with nickname
-  var hash=0;var str=nick+':'+totalPts;
-  for(var i=0;i<str.length;i++)hash=(hash*31+str.charCodeAt(i))&0x7fffffff;
-  try{await window.storage.set('enscore:'+nick,totalPts+'|'+hash,true);}catch(e){}
+  try{await window.storage.set('enscore:'+nick,String(totalPts),true);}catch(e){}
 }
 function updateScoreUI(){
   document.getElementById('v-totalpts').textContent=totalPts.toLocaleString()+' pts';
   document.getElementById('lb-mypts').textContent=totalPts.toLocaleString();
 }
 
-// ═══════════════════════════════════════════
-// LEADERBOARD (with anti-cheat verification)
-// ═══════════════════════════════════════════
+// ═══════════════════
+// LEADERBOARD
+// ═══════════════════
 async function loadLeaderboard(){
   var list=document.getElementById('lb-list');
   list.innerHTML='<div class="lb-loading">⏳ Loading...</div>';
@@ -1065,22 +785,7 @@ async function loadLeaderboard(){
     if(!keys||!keys.keys||!keys.keys.length){list.innerHTML='<div class="lb-empty">No players yet. Be the first! 🚀</div>';return;}
     var players=[];
     for(var i=0;i<keys.keys.length;i++){
-      try{
-        var r=await window.storage.get(keys.keys[i],true);
-        if(r){
-          var pnick=keys.keys[i].replace('enscore:','');
-          var parts=(r.value||'').split('|');
-          var pts=parseInt(parts[0])||0;
-          // Verify hash
-          var storedHash=parseInt(parts[1])||0;
-          var checkStr=pnick+':'+pts;
-          var calcHash=0;for(var j=0;j<checkStr.length;j++)calcHash=(calcHash*31+checkStr.charCodeAt(j))&0x7fffffff;
-          if(storedHash===calcHash||!parts[1]){
-            // Cap at reasonable max (anti-cheat)
-            if(pts<=100000)players.push({nick:pnick,pts:pts});
-          }
-        }
-      }catch(e){}
+      try{var r=await window.storage.get(keys.keys[i],true);if(r)players.push({nick:keys.keys[i].replace('enscore:',''),pts:parseInt(r.value)||0});}catch(e){}
     }
     players.sort(function(a,b){return b.pts-a.pts;});
     var list2=document.getElementById('lb-list');list2.innerHTML='';
@@ -1091,133 +796,61 @@ async function loadLeaderboard(){
       var medal=rank===1?'🥇':rank===2?'🥈':rank===3?'🥉':'';
       row.innerHTML='<div class="lb-pos '+(rank<=3?'p'+rank:'')+'">'+( medal||rank)+'</div>'+
         '<div class="lb-avatar" style="background:'+getAvCol(p.nick)+'">'+getAvatar(p.nick)+'</div>'+
-        '<div class="lb-nick">'+p.nick+(nick&&p.nick===nick?' <small>you</small>':'')+'</div>'+
+        '<div class="lb-nick">'+p.nick+(nick&&p.nick===nick?' <small>that\'s you</small>':'')+'</div>'+
         '<div><div class="lb-score-val">'+p.pts.toLocaleString()+'</div><div class="lb-score-lbl">points</div></div>';
       list2.appendChild(row);
     });
     document.getElementById('lb-myrank').textContent=myRank!=='—'?myRank:'?';
     document.getElementById('v-rank').textContent=myRank!=='—'?'#'+myRank:'';
-  }catch(e){list.innerHTML='<div class="lb-empty">Could not load leaderboard.</div>';}
+  }catch(e){document.getElementById('lb-list').innerHTML='<div class="lb-empty">Could not load leaderboard.</div>';}
 }
 
-// ═══════════════════════════════════════════
-// STATS PAGE
-// ═══════════════════════════════════════════
-function renderStatsPage(){
-  var html='';
-  // Daily streak count
-  var streakDays=0;var dt=new Date();
-  for(var i=0;i<30;i++){
-    var key=dt.toISOString().slice(0,10);
-    if(dailyData[key]&&dailyData[key].solved>=DAILY_GOAL)streakDays++;
-    else if(i>0)break;
-    dt.setDate(dt.getDate()-1);
-  }
-  html+='<div class="card" style="margin-bottom:14px"><div class="card-bar oge"></div>';
-  html+='<div style="display:flex;gap:20px;align-items:center;flex-wrap:wrap">';
-  html+='<div style="text-align:center"><div class="stat-val y" style="font-size:32px">'+streakDays+'</div><div class="stat-lbl">Day streak</div></div>';
-  html+='<div style="text-align:center"><div class="stat-val g" style="font-size:32px">'+totalPts+'</div><div class="stat-lbl">Total points</div></div>';
-  html+='</div></div>';
-
-  // Topic mastery
-  html+='<div class="card"><div class="card-bar oge"></div>';
-  html+='<div style="font-family:Unbounded;font-size:13px;font-weight:700;margin-bottom:14px">Topic mastery</div>';
-  var allTopics=TOPICS[S.exam]||[];
-  allTopics.forEach(function(t){
-    var k=S.exam+'_'+t.id;
-    var st=topicStats[k];
-    var acc=st&&st.total>0?Math.round(st.correct/st.total*100):0;
-    var total=st?st.total:0;
-    var color=acc>=80?'var(--a3)':acc>=50?'var(--a2)':'var(--a4)';
-    html+='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">';
-    html+='<div style="width:100px;font-size:12px;color:var(--dim)">'+t.l+'</div>';
-    html+='<div style="flex:1;height:8px;background:var(--b);border-radius:4px;overflow:hidden"><div style="height:100%;width:'+acc+'%;background:'+color+';border-radius:4px;transition:width .5s"></div></div>';
-    html+='<div style="font-family:Unbounded;font-size:12px;font-weight:700;color:'+color+';min-width:40px;text-align:right">'+acc+'%</div>';
-    html+='<div style="font-size:10px;color:var(--dim)">'+total+' solved</div>';
-    html+='</div>';
-  });
-  html+='</div>';
-  document.getElementById('stats-content').innerHTML=html;
-}
-
-// ═══════════════════════════════════════════
+// ═══════════════════
 // PTS POPUP
-// ═══════════════════════════════════════════
+// ═══════════════════
 function showPtsPopup(msg){
   var old=document.querySelector('.pts-popup');if(old)old.remove();
   var el=document.createElement('div');el.className='pts-popup';el.textContent=msg;
-  document.body.appendChild(el);setTimeout(function(){el.remove();},2500);
+  document.body.appendChild(el);
+  setTimeout(function(){el.remove();},2000);
 }
 
-// ═══════════════════════════════════════════
-// TOPICS & MASTERY
-// ═══════════════════════════════════════════
+// ═══════════════════
+// TOPICS
+// ═══════════════════
 function renderTopics(){
   var row=document.getElementById('v-topics');row.innerHTML='';
   TOPICS[S.exam].forEach(function(t,i){
     var btn=document.createElement('button');btn.className='chip'+(i===0?' on':'');btn.textContent=t.l;
-    (function(tid){btn.onclick=function(){
-      document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');});
-      btn.classList.add('on');S.topic=tid;renderMastery();loadTask();
-    };})(t.id);
+    (function(tid){btn.onclick=function(){document.querySelectorAll('.chip').forEach(function(c){c.classList.remove('on');});btn.classList.add('on');S.topic=tid;loadTask();};})(t.id);
     row.appendChild(btn);
   });
   S.topic=TOPICS[S.exam][0].id;
-  renderMastery();
-}
-function renderMastery(){
-  var wrap=document.getElementById('v-mastery');wrap.innerHTML='';
-  TOPICS[S.exam].forEach(function(t){
-    var k=S.exam+'_'+t.id,st=topicStats[k];
-    if(!st||!st.total)return;
-    var acc=Math.round(st.correct/st.total*100);
-    var cls=acc>=80?'high':acc>=50?'mid':'low';
-    var div=document.createElement('div');div.className='tm-item';
-    div.innerHTML='<div class="tm-dot '+cls+'"></div>'+t.l+': '+acc+'%';
-    wrap.appendChild(div);
-  });
 }
 function setExam(exam){
   S.exam=exam;
-  ['oge','ege','vpr'].forEach(function(e){document.getElementById('btn-'+e).classList.toggle('on',exam===e);});
+  ['sat','gcse','ap'].forEach(function(e){document.getElementById('btn-'+e).classList.toggle('on',exam===e);});
   document.getElementById('v-cardbar').className='card-bar '+exam;
   renderTopics();loadTask();
 }
-function setLevel(n){
-  if(isLevelBlocked(n)){showPaywall();return;}
-  S.level=n;S.autoLevel=false;
-  for(var i=1;i<=3;i++)document.getElementById('lvl-'+i).classList.toggle('on',i===n);
-  renderAdaptBadge();loadTask();
-}
+function setLevel(n){S.level=n;for(var i=1;i<=3;i++)document.getElementById('lvl-'+i).classList.toggle('on',i===n);loadTask();}
+
 function setNextGlow(on){var btn=document.getElementById('next-btn');on?btn.classList.add('pulse'):btn.classList.remove('pulse');}
 
-// ═══════════════════════════════════════════
+// ═══════════════════
 // LOAD TASK
-// ═══════════════════════════════════════════
+// ═══════════════════
 function loadTask(){
-  // Adaptive: auto-select level if enabled
-  if(S.autoLevel&&isPro){
-    var rec=getAdaptiveLevel();
-    S.level=rec;
-    for(var i=1;i<=3;i++)document.getElementById('lvl-'+i).classList.toggle('on',i===S.level);
-  }
-  // Block medium/hard for non-pro (except demo trials)
-  if(!isPro&&S.level>1){
-    if(demoTrials<=0){showPaywall();return;}
-  }
-
+  if(isBlocked()){showPaywall();return;}
   var g=GEN[S.topic];if(!g)return;
-  var f=g[S.level];if(!f){S.level=1;f=g[1];if(!f)return;}
+  var f=g[S.level];if(!f)return;
   S.task=f();S.done=false;
-
   document.getElementById('v-tq').innerHTML=S.task.q;
   document.getElementById('v-ttag').textContent=S.task.tag;
   document.getElementById('v-tnum').textContent='#'+(S.total+1);
   document.getElementById('v-ptsbadge').textContent='+'+PTS[S.level]+' pts';
-
   var dd=document.getElementById('v-tdiff');dd.innerHTML='';
   for(var i=1;i<=3;i++){var d=document.createElement('div');d.className='tdot'+(i<=S.task.diff?' on':'');dd.appendChild(d);}
-
   var inp=document.getElementById('v-input');
   inp.value='';inp.className='ans-in';inp.disabled=false;
   document.getElementById('v-checkbtn').disabled=false;
@@ -1226,33 +859,22 @@ function loadTask(){
   document.getElementById('v-sban').classList.remove('show');
   setNextGlow(false);
   document.getElementById('next-btn').textContent='→ Next Problem';
-  renderAdaptBadge();
   inp.focus();
 }
 
-// ═══════════════════════════════════════════
-// CHECK — with smart error analysis
-// ═══════════════════════════════════════════
+// ═══════════════════
+// CHECK
+// ═══════════════════
 function doCheck(){
   if(S.done)return;
   var inp=document.getElementById('v-input');
-  var raw=inp.value.trim().replace(',','.');
-  var val=parseFloat(raw);
+  var val=parseFloat(inp.value.trim().replace(',','.'));
   if(isNaN(val))return;
   S.done=true;S.total++;
-
-  // Track demo trials
-  if(!isPro&&S.level>1){demoTrials--;localStorage.setItem('mlen_demo',demoTrials);}
-
+  if(!isPro){freeUsed++;localStorage.setItem('mlen_free',freeUsed);updateFreeBar();}
   inp.disabled=true;document.getElementById('v-checkbtn').disabled=true;
-
   var ok=Math.abs(val-S.task.ans)<0.05;
   var earned=0;
-
-  // Update topic stats
-  updateTopicStats(ok);
-  recordDailySolve();
-
   if(ok){
     S.correct++;S.streak++;
     earned=PTS[S.level];
@@ -1261,92 +883,42 @@ function doCheck(){
     showPtsPopup('+'+earned+' pts'+(bonus?' 🔥':''));
     saveScore();
   }else{S.wrong++;S.streak=0;}
-
   inp.className='ans-in '+(ok?'ok':'bad');
   var fb=document.getElementById('v-fb');fb.className='fb '+(ok?'ok':'bad');
   document.getElementById('v-fb-icon').textContent=ok?'✅':'❌';
-  document.getElementById('v-fbtit').textContent=ok?'Correct! +'+earned+' points':'Wrong. Answer: '+S.task.ans;
-
-  // Build feedback
+  document.getElementById('v-fbtit').textContent=ok?'Correct! +'+earned+' points':'Wrong. The answer is: '+S.task.ans;
   var body=document.getElementById('v-fb-body');body.innerHTML='';
-
-  // Smart error analysis
-  if(!ok){
-    var errMsg=analyzeError(val,S.task.ans,S.task);
-    if(errMsg){
-      body.innerHTML+='<div class="fb-mistake"><div class="fb-mistake-lbl">🔍 Error Analysis</div><div class="fb-mistake-txt">'+errMsg+'</div></div>';
-    }
-  }
-
-  if(S.task.concept){
-    body.innerHTML+='<div class="fb-concept"><div class="fb-concept-lbl">📚 Key Concept</div><div class="fb-concept-txt">'+S.task.concept+'</div></div>';
-  }
-
-  var sh='<div class="steps-lbl">🔢 Step-by-step Solution</div><div class="steps">';
+  if(S.task.concept)body.innerHTML+='<div class="fb-concept"><div class="fb-concept-lbl">📚 Key Concept</div><div class="fb-concept-txt">'+S.task.concept+'</div></div>';
+  var sh='<div class="steps-lbl">🔢 Step-by-step solution</div><div class="steps">';
   S.task.steps.forEach(function(s,i){
     var last=(i===S.task.steps.length-1);
     sh+='<div class="srow"><div class="sline"><div class="sn">'+(i+1)+'</div>'+(last?'':'<div class="sconnect"></div>')+'</div>'+
       '<div class="scontent"><div class="st">'+s.t+'</div>'+(s.e?'<div class="sexplain">💬 '+s.e+'</div>':'')+'</div></div>';
   });
   sh+='</div>';body.innerHTML+=sh;
-
-  if(!ok&&S.task.mistake){
-    body.innerHTML+='<div class="fb-mistake"><div class="fb-mistake-lbl">⚠️ Common Mistake</div><div class="fb-mistake-txt">'+S.task.mistake+'</div></div>';
-  }
-
-  // Update UI
+  if(!ok&&S.task.mistake)body.innerHTML+='<div class="fb-mistake"><div class="fb-mistake-lbl">⚠️ Common Mistake</div><div class="fb-mistake-txt">'+S.task.mistake+'</div></div>';
   document.getElementById('v-correct').textContent=S.correct;
   document.getElementById('v-wrong').textContent=S.wrong;
   document.getElementById('v-streak').textContent=S.streak>0?'🔥'+S.streak:S.streak;
   document.getElementById('v-spts').textContent=S.sessionPts;
   document.getElementById('v-prog').style.width=(S.total?Math.round(S.correct/S.total*100):0)+'%';
-  updateScoreUI();renderMastery();
-
-  if(S.streak>0&&S.streak%5===0){
-    var ban=document.getElementById('v-sban');
-    ban.textContent='🔥 Streak '+S.streak+'! Bonus +'+(STREAK_BONUS[S.streak]||0)+' points!';
-    ban.classList.add('show');
-  }
-
+  updateScoreUI();
+  if(S.streak>0&&S.streak%5===0){var ban=document.getElementById('v-sban');ban.textContent='🔥 '+S.streak+' streak! Bonus +'+STREAK_BONUS[5]+' pts!';ban.classList.add('show');}
   setNextGlow(true);
+  if(isBlocked())document.getElementById('next-btn').textContent='🔒 Go Pro to Continue';
 }
 
-// ═══════════════════════════════════════════
-// SMART ERROR ANALYSIS
-// ═══════════════════════════════════════════
-function analyzeError(userAns,correctAns,task){
-  // Sign error
-  if(Math.abs(userAns+correctAns)<0.05){
-    return 'You got <b>'+userAns+'</b> but the answer is <b>'+correctAns+'</b>. Looks like a <b>sign error</b> — check if you lost a minus sign.';
-  }
-  // Off by factor of 10
-  if(Math.abs(userAns*10-correctAns)<0.05||Math.abs(userAns-correctAns*10)<0.05){
-    return 'Your answer is off by a <b>factor of 10</b>. Check decimal placement or percent conversion.';
-  }
-  // Common: forgot to divide
-  if(correctAns!==0&&Math.abs(userAns/correctAns-2)<0.1){
-    return 'Your answer is about <b>double</b> the correct one. Did you forget to divide by 2?';
-  }
-  // Rounded wrong
-  if(Math.abs(userAns-correctAns)<0.5&&Math.abs(userAns-correctAns)>=0.05){
-    return 'Very close! Off by '+r2(Math.abs(userAns-correctAns))+'. Check your <b>rounding</b>.';
-  }
-  return null;
-}
-
-function doNext(){
-  setNextGlow(false);
-  loadTask();
-}
+function doNext(){setNextGlow(false);if(isBlocked()){showPaywall();return;}loadTask();}
 function doHint(){var h=document.getElementById('v-hint');h.textContent=S.task?S.task.hint:'';h.classList.toggle('show');}
 
-// ═══════════════════════════════════════════
+// ═══════════════════
 // INIT
-// ═══════════════════════════════════════════
-updateFreeBar();updateDailyGoal();
+// ═══════════════════
+updateFreeBar();
 if(!nick){document.getElementById('nick-modal').classList.add('show');}
 else{updateNickUI();loadUserScore();}
-renderTopics();loadTask();
+renderTopics();
+loadTask();
 </script>
 </body>
 </html>
