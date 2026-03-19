@@ -433,256 +433,89 @@ function gcd(a,b){return b?gcd(b,a%b):a;}
 // GENERATORS
 // ═══════════════════
 var GEN={
-  algebra:{
-    1:function(){var x=rnd(-10,10),a=rnd(2,8),b=rnd(-12,12),c=a*x+b,bs=b>=0?'+ '+b:'− '+Math.abs(b);
-      return{q:'Solve for x: <span class="mth">'+a+'x '+bs+' = '+c+'</span>',ans:x,diff:1,tag:'Algebra',
-        concept:'To isolate x: move the constant to the right side (change sign), then <b>divide both sides</b> by the coefficient of x.',
-        hint:'Move '+b+' to the right, then divide both sides by '+a,
-        mistake:b>0?'When moving +'+b+' to the right, the sign becomes −'+b:null,
-        steps:[{t:'Move <b>'+b+'</b> to the right: <b>'+a+'x = '+(c-b)+'</b>',e:'When a term crosses the equals sign, its sign flips.'},
-               {t:'Divide by <b>'+a+'</b>: x = '+(c-b)+'/'+a+' = <b>'+x+'</b>',e:'Divide both sides by the coefficient to isolate x.'}]};},
-    2:function(){var x=rnd(-6,6),a=rnd(2,5),b=rnd(1,8),c=rnd(1,a-1),fin=a*(x+b)-c*x+rnd(1,10),sol=r2((fin-a*b)/(a-c));
-      return{q:'Solve: <span class="mth">'+a+'(x + '+b+') = '+c+'x + '+fin+'</span>',ans:sol,diff:2,tag:'Algebra',
-        concept:'First <b>expand the brackets</b> by multiplying '+a+' by each term inside. Then collect like terms (all x on one side, numbers on the other).',
-        hint:'Expand: '+a+'·x and '+a+'·'+b+' = '+(a*b),
-        mistake:'Don\'t forget to multiply '+a+' by BOTH terms inside the brackets.',
-        steps:[{t:'Expand: <b>'+a+'x + '+(a*b)+' = '+c+'x + '+fin+'</b>',e:a+' × x = '+a+'x and '+a+' × '+b+' = '+(a*b)+'.'},
-               {t:'Collect x terms: <b>'+(a-c)+'x = '+(fin-a*b)+'</b>',e:a+'x − '+c+'x = '+(a-c)+'x. Numbers: '+fin+' − '+(a*b)+' = '+(fin-a*b)+'.'},
-               {t:'x = '+(fin-a*b)+'/'+(a-c)+' = <b>'+sol+'</b>',e:'Divide by '+(a-c)+'.'}]};},
-    3:function(){var a=rnd(2,5),b=rnd(2,6),c=rnd(2,8),lcm=a*b/gcd(a,b),ans=r2(c*a*b/(a+b));
-      return{q:'Solve: <span class="mth">x/'+a+' + x/'+b+' = '+c+'</span>',ans:ans,diff:3,tag:'Algebra',
-        concept:'Multiply every term by the <b>LCM of the denominators</b> to eliminate fractions. LCM('+a+','+b+') = '+lcm+'.',
-        hint:'Multiply both sides by LCM = '+lcm,
-        mistake:'Multiply the right side by the LCM too, not just the left!',
-        steps:[{t:'LCM('+a+','+b+') = <b>'+lcm+'</b>',e:'Smallest number divisible by both denominators.'},
-               {t:'× '+lcm+': <b>'+(lcm/a)+'x + '+(lcm/b)+'x = '+(c*lcm)+'</b>',e:'Fractions eliminated: '+lcm+'/'+a+' = '+(lcm/a)+', '+lcm+'/'+b+' = '+(lcm/b)+'.'},
-               {t:(lcm/a+lcm/b)+'x = '+(c*lcm)+' → x = <b>'+ans+'</b>',e:'Collect and divide.'}]};}
+  algebra: {
+  1: function() {  // ── Простое линейное уравнение
+    var x = rnd(-15, 15);
+    var a = rnd(2, 9);
+    var b = rnd(-12, 12);
+    if (b === 0) b = rnd(1, 12) * (rnd(0,1) ? 1 : -1); // избегаем "+ 0"
+    var c = a * x + b;
+    
+    var bs = b === 0 ? '' : (b > 0 ? ' + ' + b : ' − ' + Math.abs(b));
+    return {
+      q: `Solve for x: <span class="mth">${a}x${bs} = ${c}</span>`,
+      ans: x,
+      diff: 1,
+      tag: 'Algebra',
+      concept: 'To isolate x: move the constant to the right side (change sign), then divide both sides by the coefficient of x.',
+      hint: `Move ${b} to the right, then divide by ${a}`,
+      mistake: b > 0 ? `When moving +${b}, the sign becomes −${b}` : null,
+      steps: [
+        { t: `Move constant: ${a}x = ${c - b}`, e: 'When a term crosses the equals sign, its sign flips.' },
+        { t: `Divide by ${a}: x = ${(c - b)} / ${a} = <b>${x}</b>`, e: 'Divide both sides by the coefficient.' }
+      ]
+    };
   },
-  linear:{
-    1:function(){var m=rnd(1,5),b=rnd(-8,8),x=rnd(-5,5),y=m*x+b,bs=b>=0?'+ '+b:'− '+Math.abs(b);
-      return{q:'Line: <span class="mth">y = '+m+'x '+bs+'</span>. Find y when x = '+x+'.',ans:y,diff:1,tag:'Linear',
-        concept:'To find a y-value, <b>substitute</b> the given x into the equation. The slope-intercept form y = mx + b tells you: m is the slope, b is where the line crosses the y-axis.',
-        hint:'Substitute x = '+x+' directly into the equation',
-        mistake:null,
-        steps:[{t:'y = '+m+'·('+x+') '+bs,e:'Replace x with '+x+'.'},
-               {t:'= '+(m*x)+' '+bs+' = <b>'+y+'</b>',e:'Multiply first, then add/subtract.'}]};},
-    2:function(){var m1=rnd(1,4),b1=rnd(-5,5),m2=rnd(1,4),b2=rnd(-5,5),xsol=b2===b1&&m1===m2?1:r2((b2-b1)/(m1-m2)),ysol=r2(m1*xsol+b1);
-      if(m1===m2)m2=m1+1;
-      var b1s=b1>=0?'+ '+b1:'− '+Math.abs(b1),b2s=b2>=0?'+ '+b2:'− '+Math.abs(b2),xsol2=r2((b2-b1)/(m1-m2)),ysol2=r2(m1*xsol2+b1);
-      return{q:'Find x where the lines intersect:<br><span class="mth">y = '+m1+'x '+b1s+'</span><br><span class="mth">y = '+m2+'x '+b2s+'</span>',ans:xsol2,diff:2,tag:'Linear',
-        concept:'Lines intersect where y is equal for both equations. Set them <b>equal to each other</b> and solve for x.',
-        hint:'Set '+m1+'x '+b1s+' = '+m2+'x '+b2s,
-        mistake:null,
-        steps:[{t:m1+'x '+b1s+' = '+m2+'x '+b2s,e:'Both equations equal y, so they equal each other.'},
-               {t:'<b>'+(m1-m2)+'x = '+(b2-b1)+'</b>',e:'Collect x terms on one side.'},
-               {t:'x = <b>'+xsol2+'</b>',e:'Divide by '+(m1-m2)+'.'}]};},
-    3:function(){var m=pick([-3,-2,-1,1,2,3]),x1=rnd(-4,4),y1=rnd(-4,4),b=y1-m*x1,bs=b>=0?'+ '+b:'− '+Math.abs(b);
-      return{q:'A line passes through <b>('+x1+', '+y1+')</b> with slope <b>'+m+'</b>. Find the y-intercept.',ans:b,diff:3,tag:'Linear',
-        concept:'Use point-slope form: y − y₁ = m(x − x₁), then rearrange to slope-intercept form y = mx + b to find the y-intercept.',
-        hint:'Plug into y = mx + b: '+y1+' = '+m+'·'+x1+' + b',
-        mistake:null,
-        steps:[{t:'y = mx + b → '+y1+' = '+m+'·'+x1+' + b',e:'Substitute the known point and slope.'},
-               {t:''+y1+' = '+(m*x1)+' + b → b = '+y1+' − '+(m*x1),e:'Isolate b.'},
-               {t:'b = <b>'+b+'</b>',e:'This is where the line crosses the y-axis.'}]};}
+
+  2: function() {  // ── Уравнение с скобками (самое частое в SAT)
+    var x = rnd(-12, 12);
+    var a = rnd(2, 7);
+    var b = rnd(-9, 9);
+    var c = rnd(1, 8);
+    if (c === a) c = a + 1;               // защита от нулевого коэффициента
+    var fin = a * (x + b) - c * x;        // точное значение
+
+    var bs = b >= 0 ? ' + ' + b : ' − ' + Math.abs(b);
+    var fins = fin >= 0 ? ' + ' + fin : ' − ' + Math.abs(fin);
+
+    return {
+      q: `Solve: <span class="mth">${a}(x ${bs}) = ${c}x${fins}</span>`,
+      ans: x,
+      diff: 2,
+      tag: 'Algebra',
+      concept: 'Expand the brackets first, then collect like terms (all x on one side).',
+      hint: `Expand left side: ${a}·x ${a*b >= 0 ? '+' : '−'} ${Math.abs(a*b)}`,
+      mistake: 'Don\'t forget to multiply the constant inside the brackets by ' + a + '.',
+      steps: [
+        { t: `Expand: ${a}x ${a*b >= 0 ? '+' : '−'} ${Math.abs(a*b)} = ${c}x${fins}`, 
+          e: `${a} × x = ${a}x and ${a} × ${b} = ${a*b}.` },
+        { t: `${a - c}x = ${fin - a*b}`, 
+          e: `Move ${c}x to left (sign changes) and move constant to right.` },
+        { t: `x = ${(fin - a*b)} / ${a - c} = <b>${x}</b>`, 
+          e: 'Divide both sides by the coefficient of x.' }
+      ]
+    };
   },
-  quadratic:{
-    1:function(){var x=rnd(1,10);
-      return{q:'Find the <b>positive</b> solution: <span class="mth">x² = '+(x*x)+'</span>',ans:x,diff:1,tag:'Quadratic',
-        concept:'Taking the square root of both sides gives x = ±√N. The ± means there are two solutions. We want the positive one.',
-        hint:'Square root both sides — remember ±',
-        mistake:null,
-        steps:[{t:'x = ±√'+(x*x),e:'Square root gives two solutions.'},
-               {t:'Positive solution: x = <b>'+x+'</b>',e:'We choose the positive value.'}]};},
-    2:function(){var x1=rnd(-5,5),x2=rnd(-5,5),B=-(x1+x2),C=x1*x2,D=B*B-4*C;
-      var bs=B>=0?'+ '+B+'x':'− '+Math.abs(B)+'x',cs=C>=0?'+ '+C:'− '+Math.abs(C);
-      return{q:'Largest root of: <span class="mth">x² '+bs+' '+cs+' = 0</span>',ans:Math.max(x1,x2),diff:2,tag:'Quadratic',
-        concept:'Use the <b>quadratic formula</b>: x = (−b ± √(b²−4ac)) / 2a. The discriminant D = b²−4ac determines how many real roots exist.',
-        hint:'a=1, b='+(B)+', c='+C+'. Find D = b²−4ac first.',
-        mistake:'Don\'t forget the coefficient 4 in D = b²−<b>4</b>ac.',
-        steps:[{t:'D = ('+B+')² − 4(1)('+C+') = '+(B*B)+' − '+(4*C)+' = <b>'+D+'</b>',e:'Positive discriminant → two distinct real roots.'},
-               {t:'x = (−'+B+' ± √'+D+') / 2',e:'Apply the quadratic formula.'},
-               {t:'Roots: <b>'+Math.min(x1,x2)+'</b> and <b>'+Math.max(x1,x2)+'</b> → largest = <b>'+Math.max(x1,x2)+'</b>',e:'The + gives the larger root.'}]};},
-    3:function(){var x1=pick([-4,-3,-2,-1,1,2,3,4]),x2=pick([-4,-3,-2,-1,1,2,3,4]),a=pick([2,3]),B=-a*(x1+x2),C=a*x1*x2;
-      var bs=B>=0?'+ '+B+'x':'− '+Math.abs(B)+'x',cs=C>=0?'+ '+C:'− '+Math.abs(C);
-      return{q:'Product of roots: <span class="mth">'+a+'x² '+bs+' '+cs+' = 0</span>',ans:x1*x2,diff:3,tag:'Quadratic',
-        concept:'<b>Vieta\'s formulas</b>: for ax²+bx+c=0, the product of roots = c/a. A shortcut that avoids solving the full equation!',
-        hint:'Product of roots = c/a = '+C+'/'+a,
-        mistake:null,
-        steps:[{t:'By Vieta\'s: x₁·x₂ = c/a',e:'No need to find the actual roots — Vieta\'s gives us the product directly.'},
-               {t:'= '+C+'/'+a+' = <b>'+(C/a)+'</b>',e:'Divide the constant term by the leading coefficient.'},
-               {t:'Check: '+x1+' × '+x2+' = <b>'+(x1*x2)+'</b> ✓',e:'Verification.'}]};}
-  },
-  percent:{
-    1:function(){var price=rnd(10,200)*10,pct=pick([5,10,20,25]),disc=price*pct/100;
-      return{q:'An item costs <b>$'+price+'</b>. There\'s a <b>'+pct+'% discount</b>. How much is saved?',ans:disc,diff:1,tag:'Percent',
-        concept:'To find p% of a number N: multiply N by p/100 (or equivalently, by the decimal 0.0p).',
-        hint:'Discount = '+price+' × '+pct+'/100',
-        mistake:null,
-        steps:[{t:'Discount = '+price+' × '+(pct/100),e:'Convert percent to decimal: '+pct+'% = '+(pct/100)+'.'},
-               {t:'= <b>$'+disc+'</b>',e:'This is the amount saved.'}]};},
-    2:function(){var base=rnd(1,10)*1000,pct=pick([5,8,10,12,15]),res=base*(1+pct/100);
-      return{q:'$'+base+' is invested at <b>'+pct+'% annual interest</b>. What is the total after 1 year?',ans:res,diff:2,tag:'Percent',
-        concept:'Total = Principal × (1 + rate). The "1" represents keeping the original amount; you\'re adding the interest on top.',
-        hint:'Total = '+base+' × (1 + '+pct+'/100)',
-        mistake:'Don\'t forget to add the original principal back — not just the interest!',
-        steps:[{t:'Interest = '+base+' × '+(pct/100)+' = $'+(base*pct/100),e:pct+'% of $'+base+'.'},
-               {t:'Total = '+base+' + '+(base*pct/100)+' = <b>$'+res+'</b>',e:'Principal plus interest.'}]};},
-    3:function(){var res=rnd(20,80)*10,pct=pick([20,25,40]),orig=r2(res*100/(100-pct));
-      return{q:'After a <b>'+pct+'% discount</b>, an item costs <b>$'+res+'</b>. What was the original price?',ans:orig,diff:3,tag:'Percent',
-        concept:'After a '+pct+'% discount, '+(100-pct)+'% of the original remains. So: new price = original × '+(100-pct)+'/100. Reverse this to find original.',
-        hint:'Original = '+res+' ÷ '+(1-pct/100),
-        mistake:'You can\'t just add '+pct+'% to $'+res+' — that gives the wrong answer because the percentage is of the original price.',
-        steps:[{t:'New price = Original × '+(100-pct)+'/100',e:'Only '+(100-pct)+'% of the original remains after a '+pct+'% cut.'},
-               {t:'Original = '+res+' ÷ '+(1-pct/100)+' = <b>$'+orig+'</b>',e:'Divide by the decimal multiplier.'}]};}
-  },
-  ratio:{
-    1:function(){var a=rnd(2,8),b=rnd(2,8),mult=rnd(2,6),ans=b*mult;
-      return{q:'If '+a+' books cost <b>$'+(a*mult)+'</b>, how much do <b>'+b+' books</b> cost?',ans:ans,diff:1,tag:'Ratio',
-        concept:'Direct proportion: cost per book is constant. Find the unit price, then multiply by the new quantity.',
-        hint:'Unit price = $'+(a*mult)+' ÷ '+a,
-        mistake:null,
-        steps:[{t:'Unit price: $'+(a*mult)+' ÷ '+a+' = <b>$'+mult+'</b>',e:'Divide total cost by number of items.'},
-               {t:'$'+mult+' × '+b+' = <b>$'+ans+'</b>',e:'Multiply unit price by new quantity.'}]};},
-    2:function(){var a=rnd(2,6),b=rnd(2,6),total=(a+b)*rnd(3,8),big=r2(total*Math.max(a,b)/(a+b));
-      return{q:'Split <b>'+total+'</b> in the ratio <b>'+a+' : '+b+'</b>. Find the <b>larger</b> share.',ans:big,diff:2,tag:'Ratio',
-        concept:'Total parts = '+a+' + '+b+' = '+(a+b)+'. One part = total ÷ '+(a+b)+'. Multiply by the share you want.',
-        hint:'One part = '+total+' ÷ '+(a+b),
-        mistake:'Don\'t split 50/50 — the ratio tells you the shares are different!',
-        steps:[{t:'One part: '+total+' ÷ '+(a+b)+' = '+r2(total/(a+b)),e:'Total divided by sum of ratio parts.'},
-               {t:'Larger share ('+Math.max(a,b)+' parts): <b>'+big+'</b>',e:'Multiply one part by '+Math.max(a,b)+'.'}]};},
-    3:function(){var speed=rnd(40,80),t1=rnd(2,4),dist=speed*t1,t2=rnd(2,5),ans=r2(dist/t2);
-      return{q:'A car travels <b>'+dist+' miles</b> in <b>'+t1+' hours</b>. What speed is needed to cover the same distance in <b>'+t2+' hours</b>?',ans:ans,diff:3,tag:'Ratio',
-        concept:'Speed = Distance ÷ Time. The distance is fixed — only the time changes. Find the new speed using the same distance.',
-        hint:'Speed = '+dist+' ÷ '+t2,
-        mistake:'The distance doesn\'t change — don\'t recalculate it.',
-        steps:[{t:'Distance = <b>'+dist+' miles</b> (unchanged)',e:'Same journey, different speed.'},
-               {t:'New speed = '+dist+' ÷ '+t2+' = <b>'+ans+' mph</b>',e:'Distance divided by new time.'}]};}
-  },
-  stats:{
-    1:function(){var nums=[rnd(2,15),rnd(2,15),rnd(2,15),rnd(2,15),rnd(2,15)],sum=nums.reduce(function(a,b){return a+b;},0),ans=r2(sum/nums.length);
-      return{q:'Find the <b>mean</b> of: <span class="mth">'+nums.join(', ')+'</span>',ans:ans,diff:1,tag:'Statistics',
-        concept:'Mean (average) = sum of all values ÷ number of values. It\'s the "balance point" of the data set.',
-        hint:'Add all numbers, then divide by '+nums.length,
-        mistake:null,
-        steps:[{t:'Sum: '+nums.join(' + ')+' = <b>'+sum+'</b>',e:'Add all values.'},
-               {t:'Mean = '+sum+' ÷ '+nums.length+' = <b>'+ans+'</b>',e:'Divide by the count of numbers.'}]};},
-    2:function(){var nums=[rnd(2,15),rnd(2,15),rnd(2,15),rnd(2,15),rnd(2,15)].sort(function(a,b){return a-b;});
-      var ans=nums[2];
-      return{q:'Find the <b>median</b> of: <span class="mth">'+nums.join(', ')+'</span>',ans:ans,diff:2,tag:'Statistics',
-        concept:'Median = the middle value when data is sorted. For 5 values, the median is the 3rd value (position (5+1)/2 = 3).',
-        hint:'Data is already sorted — find the middle value',
-        mistake:'The data must be in order first! Always sort before finding the median.',
-        steps:[{t:'Sorted: '+nums.join(', '),e:'Already sorted — confirm the order.'},
-               {t:'Middle value (position 3 of 5): <b>'+ans+'</b>',e:'5 values → median is the 3rd one.'}]};},
-    3:function(){var mean=rnd(10,50),n=rnd(4,8),sum=mean*n,extra=rnd(5,30),newmean=r2((sum+extra)/(n+1));
-      return{q:'A set of <b>'+n+' numbers</b> has a mean of <b>'+mean+'</b>. A new number <b>'+extra+'</b> is added. What is the new mean?',ans:newmean,diff:3,tag:'Statistics',
-        concept:'Work backwards from the mean: total sum = mean × count. Add the new value, divide by the new count.',
-        hint:'Original total sum = '+mean+' × '+n+' = '+(mean*n),
-        mistake:'Don\'t average the two means — you need to work with the actual sum.',
-        steps:[{t:'Original sum = '+mean+' × '+n+' = <b>'+(mean*n)+'</b>',e:'Reverse-engineer the total from the mean.'},
-               {t:'New sum = '+(mean*n)+' + '+extra+' = <b>'+(sum+extra)+'</b>',e:'Add the new number.'},
-               {t:'New mean = '+(sum+extra)+' ÷ '+(n+1)+' = <b>'+newmean+'</b>',e:'Divide by new count ('+(n+1)+').'}]};}
-  },
-  geo:{
-    1:function(){var a=rnd(2,15),b=rnd(2,15),ans=2*(a+b);
-      return{q:'A rectangle has sides <b>'+a+'</b> and <b>'+b+'</b>. Find the perimeter.',ans:ans,diff:1,tag:'Geometry',
-        concept:'Perimeter = sum of all sides. For a rectangle with length a and width b: P = 2(a + b).',
-        hint:'P = 2 × ('+a+' + '+b+')',
-        mistake:null,
-        steps:[{t:'P = 2('+a+' + '+b+') = 2 × '+(a+b)+' = <b>'+ans+'</b>',e:'Two pairs of equal sides.'}]};},
-    2:function(){var r=rnd(2,12),ans=r2(Math.PI*r*r);
-      return{q:'A circle has radius <b>'+r+'</b>. Find the area. (Use π ≈ 3.14, round to 2 decimal places)',ans:ans,diff:2,tag:'Geometry',
-        concept:'Area of a circle: A = πr². Square the radius first, then multiply by π (≈ 3.14159...).',
-        hint:'A = π × '+r+'²= π × '+(r*r),
-        mistake:'Don\'t forget to SQUARE the radius. A = π<b>r²</b>, not πr.',
-        steps:[{t:'r² = '+r+'² = '+(r*r),e:'Square the radius first.'},
-               {t:'A = π × '+(r*r)+' ≈ 3.14159 × '+(r*r)+' = <b>'+ans+'</b>',e:'Multiply by π.'}]};},
-    3:function(){var a=rnd(3,12),b=rnd(3,12),c=Math.round(Math.sqrt(a*a+b*b));var aa=c*c-b*b;var ra=Math.round(Math.sqrt(aa));
-      return{q:'Right triangle: legs <b>'+ra+'</b> and <b>'+b+'</b>. Find the hypotenuse.',ans:c,diff:3,tag:'Geometry',
-        concept:'The Pythagorean theorem: a² + b² = c², where c is the hypotenuse (the longest side, opposite the right angle).',
-        hint:'c = √('+ra+'² + '+b+'²)',
-        mistake:'The hypotenuse is always the side opposite the right angle — the longest side.',
-        steps:[{t:'c² = '+ra+'² + '+b+'² = '+(ra*ra)+' + '+(b*b)+' = '+(ra*ra+b*b),e:'Square both legs and add.'},
-               {t:'c = √'+(ra*ra+b*b)+' = <b>'+Math.round(Math.sqrt(ra*ra+b*b))+'</b>',e:'Take the square root.'}]};}
-  },
-  limits:{
-    1:function(){var a=rnd(1,5),b=rnd(1,5),c=rnd(-3,3),ans=a*c+b;
-      return{q:'Evaluate: <span class="mth">lim<sub>x→'+c+'</sub> ('+a+'x + '+b+')</span>',ans:ans,diff:1,tag:'Limits',
-        concept:'For a polynomial, the limit as x→c is found by <b>direct substitution</b>: simply plug in x = c.',
-        hint:'Substitute x = '+c+' directly',
-        mistake:null,
-        steps:[{t:'Substitute x = '+c+': '+a+'('+c+') + '+b,e:'Polynomials are continuous — direct substitution works.'},
-               {t:'= '+(a*c)+' + '+b+' = <b>'+ans+'</b>',e:'Simplify.'}]};},
-    2:function(){var a=rnd(1,4),ans=2*a;
-      return{q:'Evaluate: <span class="mth">lim<sub>x→'+a+'</sub> (x² − '+a*a+') / (x − '+a+')</span>',ans:ans,diff:2,tag:'Limits',
-        concept:'Direct substitution gives 0/0 — an indeterminate form. <b>Factor the numerator</b> as a difference of squares: x² − a² = (x+a)(x−a).',
-        hint:'Factor: x² − '+(a*a)+' = (x + '+a+')(x − '+a+')',
-        mistake:'You can\'t just substitute when you get 0/0 — you must simplify first.',
-        steps:[{t:'= (x+'+a+')(x−'+a+') / (x−'+a+')',e:'Factor numerator as difference of squares.'},
-               {t:'= (x + '+a+')  [cancel (x−'+a+')]',e:'Cancel the common factor.'},
-               {t:'lim = '+a+' + '+a+' = <b>'+ans+'</b>',e:'Now substitute x = '+a+'.'}]};},
-    3:function(){var a=rnd(2,6),ans=0;
-      return{q:'Evaluate: <span class="mth">lim<sub>x→∞</sub> '+a+' / x</span>',ans:ans,diff:3,tag:'Limits',
-        concept:'As x grows without bound, a constant divided by x approaches 0. The numerator stays fixed while the denominator grows infinitely large.',
-        hint:'What happens to '+a+'/x as x becomes enormous?',
-        mistake:'This does NOT equal 1 — '+a+' divided by infinity approaches 0.',
-        steps:[{t:'As x → ∞, denominator grows without bound',e:'Numerator '+a+' stays constant.'},
-               {t:a+' / (very large number) → 0',e:'A fixed number divided by ∞ = 0.'},
-               {t:'lim = <b>0</b>',e:'Classic result: c/x → 0 as x → ∞.'}]};}
-  },
-  derivatives:{
-    1:function(){var n=rnd(2,6),c=rnd(1,5),ans=n*c;
-      return{q:'Differentiate: <span class="mth">f(x) = '+c+'x<sup>'+n+'</sup></span><br>Find <b>f\'(x)</b> at the coefficient (the number in front of x<sup>'+(n-1)+'</sup>)',ans:ans,diff:1,tag:'Derivatives',
-        concept:'Power Rule: d/dx[xⁿ] = n·xⁿ⁻¹. Multiply by the exponent, reduce the power by 1. The constant coefficient comes along for the ride.',
-        hint:'Multiply the coefficient '+c+' by the power '+n,
-        mistake:null,
-        steps:[{t:'f\'(x) = '+c+' · '+n+' · x^('+(n-1)+')',e:'Bring down the exponent, reduce power by 1.'},
-               {t:'f\'(x) = <b>'+ans+'</b>x^'+(n-1),e:'The coefficient of x^'+(n-1)+' is '+ans+'.'}]};},
-    2:function(){var a=rnd(2,5),b=rnd(1,8),x=rnd(1,5),ans=a*b*Math.pow(x,b-1);
-      return{q:'f(x) = x<sup>'+b+'</sup>. Find the <b>slope</b> at x = '+x+'.',ans:ans,diff:2,tag:'Derivatives',
-        concept:'The derivative f\'(x) gives the slope of the tangent at any point. Use Power Rule to get f\'(x), then substitute x = '+x+'.',
-        hint:'f\'(x) = '+b+'x^'+(b-1)+', then plug in x = '+x,
-        mistake:null,
-        steps:[{t:'f\'(x) = '+b+'x^'+(b-1),e:'Power rule: bring down '+b+', reduce power.'},
-               {t:'f\'('+x+') = '+b+' · '+x+'^'+(b-1)+' = '+b+' · '+Math.pow(x,b-1),e:'Substitute x = '+x+'.'},
-               {t:'= <b>'+ans+'</b>',e:'This is the slope of the tangent line at x = '+x+'.'}]};},
-    3:function(){var a=rnd(2,4),b=rnd(2,5),c=rnd(1,5),ans=a*b;
-      return{q:'f(x) = '+a+'x<sup>'+b+'</sup> − '+c+'x + 7<br>Find the <b>coefficient of x<sup>'+(b-1)+'</sup></b> in f\'(x).',ans:ans,diff:3,tag:'Derivatives',
-        concept:'Differentiate term by term. Power rule on '+a+'x^'+b+' → '+a+'·'+b+'x^'+(b-1)+'. The −'+c+'x term becomes −'+c+'. The constant 7 disappears.',
-        hint:'Differentiate each term separately',
-        mistake:'Constants (like +7) vanish when differentiated — their derivative is 0.',
-        steps:[{t:'d/dx['+a+'x^'+b+'] = '+a+'·'+b+'·x^'+(b-1)+' = '+ans+'x^'+(b-1),e:'Power rule on the first term.'},
-               {t:'d/dx[−'+c+'x] = −'+c+', d/dx[7] = 0',e:'Derivative of linear term and constant.'},
-               {t:'f\'(x) = '+ans+'x^'+(b-1)+' − '+c,e:'Combined result.'},
-               {t:'Coefficient of x^'+(b-1)+': <b>'+ans+'</b>',e:'The answer requested.'}]};}
-  },
-  integrals:{
-    1:function(){var n=rnd(1,5),c=rnd(1,6),ans=r2(c/(n+1));
-      return{q:'∫ <span class="mth">'+c+'x<sup>'+n+'</sup></span> dx — find the coefficient of x<sup>'+(n+1)+'</sup> (no +C)',ans:ans,diff:1,tag:'Integrals',
-        concept:'Power Rule for integration (reverse of differentiation): ∫xⁿ dx = x^(n+1)/(n+1) + C. Increase the power by 1, divide by the new power.',
-        hint:'New power = '+n+'+1 = '+(n+1)+'. Divide '+c+' by '+(n+1)+'.',
-        mistake:'Add 1 to the exponent, then DIVIDE by that new exponent. (Opposite of differentiation.)',
-        steps:[{t:'∫'+c+'x^'+n+' dx = '+c+' · x^'+(n+1)+'/'+(n+1),e:'Increase power by 1, divide by new power.'},
-               {t:'Coefficient = '+c+'/'+(n+1)+' = <b>'+ans+'</b>',e:'Simplify the fraction.'}]};},
-    2:function(){var a=rnd(1,5),b=rnd(2,6),ans=r2(a*b*b/2-a*1/2);
-      var realAns=r2(a*(b*b-1)/2);
-      return{q:'Evaluate: <span class="mth">∫₁^'+b+' '+a+'x dx</span>',ans:realAns,diff:2,tag:'Integrals',
-        concept:'Definite integral = area under the curve. Integrate to get F(x), then compute F(upper) − F(lower).',
-        hint:'Integrate to get '+a+'x²/2, then evaluate from 1 to '+b,
-        mistake:'Remember to subtract F(lower limit) from F(upper limit).',
-        steps:[{t:'∫'+a+'x dx = '+a+'x²/2',e:'Antiderivative using power rule.'},
-               {t:'F('+b+') − F(1) = '+a+'·'+(b*b)+'/2 − '+a+'·1/2',e:'Evaluate at upper then lower bound.'},
-               {t:'= '+(a*b*b/2)+' − '+(a/2)+' = <b>'+realAns+'</b>',e:'Subtract.'}]};},
-    3:function(){var a=rnd(1,4),ans=0;
-      return{q:'Evaluate: <span class="mth">∫₋'+a+'^'+a+' x³ dx</span>',ans:ans,diff:3,tag:'Integrals',
-        concept:'f(x) = x³ is an <b>odd function</b>: f(−x) = −f(x). The integral of an odd function over a symmetric interval [−a, a] is always 0.',
-        hint:'Is x³ an odd or even function?',
-        mistake:'Don\'t calculate this the long way! Recognize the symmetry.',
-        steps:[{t:'f(x) = x³ is odd: f(−x) = (−x)³ = −x³ = −f(x)',e:'Test for odd symmetry.'},
-               {t:'For odd f over [−'+a+', '+a+']: ∫f dx = 0',e:'The positive and negative areas cancel exactly.'},
-               {t:'Answer = <b>0</b>',e:'Symmetric cancellation — elegant shortcut!'}]};}
+
+  3: function() {  // ── Уравнение с двумя дробями (самое сложное)
+    var a = rnd(2, 7);
+    var b = rnd(2, 7);
+    if (a === b) b = a + 1;
+    var k = rnd(1, 4);                    // множитель для красивого целого ответа
+    var c = k * (a + b);
+    var ans = k * a * b;
+
+    var lcm = a * b / gcd(a, b);
+
+    return {
+      q: `Solve: <span class="mth">x/${a} + x/${b} = ${c}</span>`,
+      ans: ans,
+      diff: 3,
+      tag: 'Algebra',
+      concept: 'Multiply every term by the LCM of the denominators to eliminate fractions.',
+      hint: `Multiply both sides by LCM(${a},${b}) = ${lcm}`,
+      mistake: 'Don\'t forget to multiply the right side by the LCM too!',
+      steps: [
+        { t: `LCM(${a},${b}) = <b>${lcm}</b>`, 
+          e: 'Smallest number divisible by both denominators.' },
+        { t: `× ${lcm}: ${lcm/a}x + ${lcm/b}x = ${c * lcm}`, 
+          e: `Fractions disappear: ${lcm}/${a} = ${lcm/a}, ${lcm}/${b} = ${lcm/b}.` },
+        { t: `${(lcm/a + lcm/b)}x = ${c * lcm} → x = <b>${ans}</b>`, 
+          e: 'Collect terms and divide.' }
+      ]
+    };
   }
-};
+}
 
 // ═══════════════════
 // AVATARS
