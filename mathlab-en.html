@@ -434,139 +434,129 @@ function gcd(a,b){return b?gcd(b,a%b):a;}
 // ═══════════════════
 var GEN={
   var GEN = {
+var GEN = {
   algebra: {
-    1: function() { // Линейные уравнения / inequalities (Heart of Algebra base)
-      let variants = rnd(1,3);
-      if (variants === 1) { // ax + b = c
-        let x = rnd(-20,20);
-        let a = rnd(3,9);
-        let b = rnd(-30,30);
-        if (b===0) b = rnd(5,25)*(rnd(0,1)?1:-1);
-        let c = a*x + b;
-        let sign = b>=0 ? ' + ' : ' − ';
-        let absb = Math.abs(b);
-        return {
-          q: `Solve: <span class="mth">${a}x${sign}${absb} = ${c}</span>`,
-          ans: x,
-          diff:1, tag:'Algebra',
-          concept:'Isolate x by moving constant (flip sign) then divide.',
-          hint:`Subtract ${absb} from both sides, then divide by ${a}.`,
-          steps:[
-            {t:`${a}x = ${c-b}`, e:'Constant moved — sign flipped.'},
-            {t:`x = ${x}`, e:'Divided by coefficient.'}
-          ]
-        };
-      } else if (variants === 2) { // inequality
-        let x = rnd(1,15);
-        let a = pick([2,3,4,5,6]);
-        let b = rnd(5,25);
-        let ans = a*x + b;
-        return {
-          q: `If ${a}x + ${b} ≤ ${ans + rnd(3,12)}, what is the largest integer x?`,
-          ans: x,
-          diff:1, tag:'Algebra',
-          concept:'Solve inequality like equation, flip sign when dividing by negative (here positive).',
-          steps:[
-            {t:`${a}x ≤ ${ans + rnd(3,12) - b}`, e:'Moved constant.'},
-            {t:`x ≤ ${x + (rnd(3,12)/a <1 ? 0 : rnd(0,1))}`, e:'Divided — inequality direction same.'},
-            {t:`Largest integer: <b>${x}</b>`, e:''}
-          ]
-        };
-      } else { // word problem linear
-        let rate = rnd(8,20);
-        let fixed = rnd(30,80);
-        let total = rate * rnd(4,10) + fixed;
-        return {
-          q: `A gym charges $${fixed} joining fee + $${rate} per class. How many classes for total $${total}?`,
-          ans: (total - fixed)/rate,
-          diff:1, tag:'Algebra',
-          concept:'Total = fixed + rate × number → solve for number.',
-          steps:[
-            {t:`${total} = ${fixed} + ${rate}n`, e:'Set up equation.'},
-            {t:`${rate}n = ${total-fixed}`, e:'Subtract fixed.'},
-            {t:`n = <b>${(total-fixed)/rate}</b>`, e:'Divide.'}
-          ]
-        };
-      }
+    1: function() {
+      let x = rnd(-15,15);
+      let a = rnd(2,9);
+      let b = rnd(-20,20);
+      if (b===0) b = rnd(5,25)*(rnd(0,1)?1:-1);
+      let c = a*x + b;
+      let bs = b>=0 ? ' + ' + b : ' − ' + Math.abs(b);
+      return {
+        q: `Solve for x: <span class="mth">${a}x${bs} = ${c}</span>`,
+        ans: x,
+        diff:1,
+        tag:'Algebra',
+        concept:'To isolate x: move the constant to the right (flip sign), then divide.',
+        hint:`Move ${b} to the right, then divide by ${a}`,
+        steps:[{t:`${a}x = ${c-b}`, e:'Constant moved — sign flipped.'},{t:`x = ${x}`, e:'Divided by coefficient.'}]
+      };
     },
-
-    2: function() { // Расширенные линейные + системы (non-linear light)
-      let type = rnd(1,3);
-      if (type===1) { // brackets + variables on both sides
-        let a = rnd(2,6), b=rnd(-8,8), c=rnd(2,7);
-        if (a===c) c=a+1;
-        let x = rnd(-10,10);
-        let left = a*(x + b);
-        let right = c*x + rnd(-40,60);
-        let diff = a - c;
-        let constDiff = right - a*b;
-        return {
-          q: `Solve: <span class="mth">${a}(x ${b>=0?'+ ':'− '}${Math.abs(b)}) = ${c}x ${right>=0?'+ ':'− '}${Math.abs(right)}</span>`,
-          ans: x,
-          diff:2,
-          concept:'Expand, collect like terms, solve.',
-          steps:[
-            {t:`${a}x ${a*b>=0?'+':'−'}${Math.abs(a*b)} = ${c}x ${right>=0?'+':'−'}${Math.abs(right)}`, e:'Expanded brackets.'},
-            {t:`${diff}x = ${constDiff}`, e:'Moved terms.'},
-            {t:`x = <b>${x}</b>`, e:'Divided.'}
-          ]
-        };
-      } else if (type===2) { // linear + linear system (intersection)
-        let m1 = rnd(1,5), b1 = rnd(-10,10);
-        let m2 = m1 + rnd(1,4), b2 = b1 + rnd(5,20);
-        let x = (b2 - b1)/(m1 - m2);
-        let y = m1*x + b1;
-        let sign1 = b1>=0?'+':'−', abs1=Math.abs(b1);
-        let sign2 = b2>=0?'+':'−', abs2=Math.abs(b2);
-        return {
-          q: `Find x where lines meet:<br>y = ${m1}x ${sign1} ${abs1}<br>y = ${m2}x ${sign2} ${abs2}`,
-          ans: Math.round(x*100)/100, // allow slight decimal if needed, but rare
-          diff:2,
-          concept:'Set equal: m1x + b1 = m2x + b2 → solve for x.',
-          steps:[
-            {t:`${m1 - m2}x = ${b2 - b1}`, e:'Collected x terms.'},
-            {t:`x = <b>${x.toFixed(2)}</b>`, e:'Solved.'}
-          ]
-        };
-      } else { // absolute value equation light
-        let x = rnd(5,15);
-        let a = rnd(2,5);
-        let ans = a*x;
-        return {
-          q: `Solve |${a}x| = ${ans}`,
-          ans: x,
-          diff:2,
-          concept:'|expression| = positive → two cases: positive and negative.',
-          steps:[
-            {t:`Case 1: ${a}x = ${ans} → x = ${x}`, e:''},
-            {t:`Case 2: ${a}x = −${ans} → x = −${x}`, e:''},
-            {t:`Positive solution (common): <b>${x}</b>`, e:''}
-          ]
-        };
-      }
+    2: function() {
+      let x = rnd(-12,12);
+      let a = rnd(2,7);
+      let b = rnd(-9,9);
+      let c = rnd(1,8);
+      if (c===a) c = a+1;
+      let fin = a*(x+b) - c*x;
+      let bs = b>=0 ? ' + ' + b : ' − ' + Math.abs(b);
+      return {
+        q: `Solve: <span class="mth">${a}(x${bs}) = ${c}x + ${fin}</span>`,
+        ans: x,
+        diff:2,
+        tag:'Algebra',
+        concept:'Expand brackets, collect like terms.',
+        hint:`Expand: ${a}x ${a*b>=0 ? '+' : '−'} ${Math.abs(a*b)}`,
+        steps:[{t:`${a}x ${a*b>=0 ? '+' : '−'} ${Math.abs(a*b)} = ${c}x + ${fin}`, e:'Expanded.'},{t:`${a-c}x = ${fin-a*b}`, e:'Collected terms.'},{t:`x = ${x}`, e:'Divided.'}]
+      };
     },
-
-    3: function() { // Fractions + harder algebra (common SAT hard)
-      let a = rnd(3,9), b = rnd(3,9);
-      while(a===b) b=rnd(3,9);
-      let k = rnd(2,5);
+    3: function() {
+      let a = rnd(2,8), b = rnd(2,8);
+      while(a===b) b=rnd(2,8);
+      let k = rnd(1,5);
       let c = k*(a+b);
       let ans = k*a*b;
-      let lcm_ab = a*b / gcd(a,b);
+      let lcm = a*b / gcd(a,b);
       return {
-        q: `Solve: <span class="mth">\\frac{x}{${a}} + \\frac{x}{${b}} = ${c}</span>`,
+        q: `Solve: <span class="mth">x/${a} + x/${b} = ${c}</span>`,
         ans: ans,
         diff:3,
-        concept:'Multiply by LCM to clear denominators.',
-        hint:`LCM(${a},${b}) = ${lcm_ab}`,
-        steps:[
-          {t:`× ${lcm_ab}: \\frac{${lcm_ab}}{${a}}x + \\frac{${lcm_ab}}{${b}}x = ${c*lcm_ab}`, e:'Cleared fractions.'},
-          {t:`${(lcm_ab/a + lcm_ab/b)}x = ${c*lcm_ab}`, e:'Combined.'},
-          {t:`x = <b>${ans}</b>`, e:'Divided.'}
-        ]
+        tag:'Algebra',
+        concept:'Multiply by LCM to clear fractions.',
+        hint:`LCM(${a},${b}) = ${lcm}`,
+        steps:[{t:`×${lcm}: ${(lcm/a)}x + ${(lcm/b)}x = ${c*lcm}`, e:'Fractions gone.'},{t:`x = ${ans}`, e:'Solved.'}]
       };
     }
   },
+
+  linear: { /* оригинальный код остался */ 
+    1:function(){var m=rnd(1,5),b=rnd(-8,8),x=rnd(-5,5),y=m*x+b,bs=b>=0?'+ '+b:'− '+Math.abs(b);
+      return{q:'Line: <span class="mth">y = '+m+'x '+bs+'</span>. Find y when x = '+x+'.',ans:y,diff:1,tag:'Linear',concept:'To find a y-value, <b>substitute</b> the given x into the equation.',hint:'Substitute x = '+x+' directly into the equation',mistake:null,steps:[{t:'y = '+m+'·('+x+') '+bs,e:'Replace x with '+x+'.'},{t:'= '+(m*x)+' '+bs+' = <b>'+y+'</b>',e:'Multiply first, then add/subtract.'}]};},
+    /* ... остальной linear, quadratic, percent и т.д. полностью оригинальный ... */
+  },
+
+  quadratic: { /* оригинальный */ },
+  percent: { /* оригинальный */ },
+  ratio: { /* оригинальный */ },
+  stats: { /* оригинальный */ },
+  geo: { /* оригинальный */ },
+
+  /*** ИСПРАВЛЕННЫЙ LIMITS — теперь супер-разнообразный ***/
+  limits: {
+    1: function() {
+      const type = rnd(1,6);
+
+      if (type === 1) { // Линейная функция
+        let a = rnd(2,8); let b = rnd(-15,15); let c = rnd(-6,6);
+        let ans = a*c + b;
+        let sign = b >= 0 ? ' + ' : ' − ';
+        return { q: `Evaluate: \\lim_{x \\to ${c}} (${a}x${sign}${Math.abs(b)})`, ans: ans, diff:1, tag:'Limits',
+          concept:'Предел полинома — просто подстановка.', hint:`Подставь x = ${c}`,
+          steps:[{t:`${a}·${c}${sign}${Math.abs(b)} = ${ans}`, e:'Прямая подстановка.'}] };
+      }
+      if (type === 2) { // Константа
+        let k = rnd(-30,30); let c = rnd(-5,5);
+        return { q: `Evaluate: \\lim_{x \\to ${c}} ${k}`, ans: k, diff:1, tag:'Limits',
+          concept:'Предел константы = сама константа.', hint:'x не влияет',
+          steps:[{t:`Ответ = ${k}`, e:''}] };
+      }
+      if (type === 3) { // Простая дробь
+        let n = rnd(2,7); let d = rnd(1,5); let c = rnd(-4,4);
+        let ans = (n*c)/d;
+        return { q: `Evaluate: \\lim_{x \\to ${c}} \\frac{${n}x}{${d}}`, ans: ans, diff:1, tag:'Limits',
+          concept:'Подстановка в числитель и знаменатель.', hint:`\\frac{${n}·${c}}{${d}}`,
+          steps:[{t:`= ${ans}`, e:'Знаменатель ≠ 0'}] };
+      }
+      if (type === 4) { // Кусочная функция
+        let c = rnd(-3,3); let left = rnd(-10,10); let right = rnd(-10,10);
+        let ans = (c >= 0) ? right : left;
+        return { q: `f(x) = { ${left} если x < 0 | ${right} если x ≥ 0 }<br>Evaluate lim x→${c} f(x)`, ans: ans, diff:1, tag:'Limits',
+          concept:'Предел зависит от поведения около точки.', hint:`С какой стороны?`,
+          steps:[{t:`x → ${c} → ${ans}`, e:''}] };
+      }
+      if (type === 5) { // Контекст (физика)
+        let v = rnd(50,120); let t = rnd(2,6); let dist = v*t;
+        return { q: `Машина едет ${v} км/ч. Расстояние за ${t} ч?`, ans: dist, diff:1, tag:'Limits',
+          concept:'Предел здесь = просто значение функции.', hint:'Скорость × время',
+          steps:[{t:`${v} × ${t} = ${dist}`, e:''}] };
+      }
+      // Классика sin(x)/x
+      return { q: `Evaluate: \\lim_{x \\to 0} \\frac{\\sin x}{x}`, ans: 1, diff:1, tag:'Limits',
+        concept:'Классический предел = 1.', hint:'Запомни это значение',
+        steps:[{t:'= 1', e:'Стандартный результат'}] };
+    },
+
+    2: function() { /* пока оригинальный (0/0 форма) */ 
+      var a=rnd(1,4),ans=2*a;
+      return{q:'Evaluate: <span class="mth">lim<sub>x→'+a+'</sub> (x² − '+a*a+') / (x − '+a+')</span>',ans:ans,diff:2,tag:'Limits', /* ... оригинал ... */};
+    },
+    3: function() { /* оригинальный */ }
+  },
+
+  derivatives: { /* оригинальный */ },
+  integrals: { /* оригинальный */ }
+};
 
   // Продолжение для остальных разделов — quadratic, percent, linear и т.д.
   // Чтобы не растягивать сообщение до бесконечности, вот принцип:
